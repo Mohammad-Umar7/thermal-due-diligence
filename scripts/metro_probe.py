@@ -14,7 +14,10 @@ CITIES = {
     # name: (lat, lon, box_km) - centred to span urban core, the airport station, and fringe
     "phoenix":   (33.4500, -112.0700, 30),
     "lasvegas":  (36.1400, -115.1500, 30),
-    "houston":   (29.7800,  -95.3900, 30),
+    # Bush Intercontinental sits 26 km north of downtown, so Houston needs a
+    # wider box centred between them; a 30 km box centred downtown excludes
+    # the station entirely and silently measures the wrong tile.
+    "houston":   (29.8750,  -95.3600, 40),
     "miami":     (25.7800,  -80.2600, 30),
     "austin":    (30.2700,  -97.7300, 30),
 }

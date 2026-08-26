@@ -1,26 +1,178 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  Thermal Due Diligence - design tokens.
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  The subject is land records, survey plats and engineering datasheets, so the
+  chrome is cool drafting paper and survey ink, not a SaaS dashboard.
+
+  The heat ramp is reserved EXCLUSIVELY for encoding temperature. Nothing
+  structural, decorative or navigational uses it. When everything is red,
+  nothing is.
+*/
+
+:root {
+  /* chrome */
+  --ground: #eef1f4;        /* drafting paper */
+  --surface: #ffffff;
+  --surface-sunk: #e6ebef;
+  --ink: #16202b;           /* deep slate, never pure black */
+  --ink-muted: #5c6a7a;
+  --ink-faint: #8896a6;
+  --rule: #c3ccd6;
+  --rule-strong: #9dabba;
+  --survey: #1b5e8c;        /* annotation ink */
+  --survey-wash: #e3edf5;
+
+  /* heat ramp - data encoding only */
+  --heat-0: #f2e8da;
+  --heat-1: #e8a33d;
+  --heat-2: #c1462b;
+  --heat-3: #7a1f1a;
+
+  --cool: #3d7ea6;          /* the below-standard direction */
+
+  --shadow-card: 0 1px 2px rgba(22, 32, 43, 0.04), 0 8px 24px rgba(22, 32, 43, 0.06);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --ground: #101619;
+    --surface: #18212a;
+    --surface-sunk: #131b22;
+    --ink: #e4eaf0;
+    --ink-muted: #9aa8b6;
+    --ink-faint: #6b7887;
+    --rule: #2c3946;
+    --rule-strong: #435466;
+    --survey: #5ba3d0;
+    --survey-wash: #1a2b38;
+
+    --heat-0: #4a3f31;
+    --heat-1: #d99433;
+    --heat-2: #d4553a;
+    --heat-3: #a83226;
+
+    --cool: #5c9dc4;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
   }
 }
 
+:root[data-theme="dark"] {
+  --ground: #101619;
+  --surface: #18212a;
+  --surface-sunk: #131b22;
+  --ink: #e4eaf0;
+  --ink-muted: #9aa8b6;
+  --ink-faint: #6b7887;
+  --rule: #2c3946;
+  --rule-strong: #435466;
+  --survey: #5ba3d0;
+  --survey-wash: #1a2b38;
+
+  --heat-0: #4a3f31;
+  --heat-1: #d99433;
+  --heat-2: #d4553a;
+  --heat-3: #a83226;
+
+  --cool: #5c9dc4;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-surface-sunk: var(--surface-sunk);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-survey: var(--survey);
+  --color-survey-wash: var(--survey-wash);
+  --color-heat-0: var(--heat-0);
+  --color-heat-1: var(--heat-1);
+  --color-heat-2: var(--heat-2);
+  --color-heat-3: var(--heat-3);
+  --color-cool: var(--cool);
+
+  --font-display: var(--font-spectral), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+html {
+  background: var(--ground);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+  Figures are the content of this product, so every number is set in the mono
+  face with tabular figures. Columns of temperatures must align on the decimal.
+*/
+.figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+/* Small caps label, the voice of a form field on an official document. */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.rule-h {
+  border-top: 1px solid var(--rule);
+}
+
+/* Visible keyboard focus everywhere, on a real contrast ratio. */
+:where(a, button, input, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--survey);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .page-break {
+    break-before: page;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.7em;
+    color: #555;
+  }
 }

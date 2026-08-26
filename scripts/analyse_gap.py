@@ -48,6 +48,14 @@ def analyse(city):
     d04 = design_dry_bulb(temps, 0.4)
 
     station_tile, dist = nearest(rows, st["lat"], st["lon"])
+    # The station tile must actually contain the station. Without this guard a
+    # station outside the queried box silently matches a tile on the box edge,
+    # and every offset computed against it is meaningless.
+    if dist > 200:
+        raise ValueError(
+            "%s: nearest tile to the reference station is %.0f m away. The station "
+            "is not inside the queried area, so no offset can be computed against "
+            "it. Widen or recentre the AOI in scripts/metro_probe.py." % (city, dist))
     peak_offsets = sorted(r[4] - station_tile[4] for r in rows)
     night_offsets = sorted(r[3] - station_tile[3] for r in rows)
     n = len(peak_offsets)

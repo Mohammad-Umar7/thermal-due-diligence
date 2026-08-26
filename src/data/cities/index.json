@@ -1,0 +1,37 @@
+[
+  {
+    "city": "houston",
+    "label": "Houston, TX",
+    "station": "Houston George Bush Intercontinental, TX",
+    "combinedMaxC": 3.21,
+    "parcels": 3
+  },
+  {
+    "city": "phoenix",
+    "label": "Phoenix, AZ",
+    "station": "Phoenix Sky Harbor Intl, AZ",
+    "combinedMaxC": 1.81,
+    "parcels": 2
+  },
+  {
+    "city": "lasvegas",
+    "label": "Las Vegas, NV",
+    "station": "Las Vegas Harry Reid Intl, NV",
+    "combinedMaxC": 2.1,
+    "parcels": 3
+  },
+  {
+    "city": "austin",
+    "label": "Austin, TX",
+    "station": "Austin-Bergstrom Intl, TX",
+    "combinedMaxC": 2.23,
+    "parcels": 3
+  },
+  {
+    "city": "miami",
+    "label": "Miami, FL",
+    "station": "Miami Intl, FL",
+    "combinedMaxC": 3.21,
+    "parcels": 3
+  }
+]
