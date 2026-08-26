@@ -8,6 +8,14 @@ export function generateStaticParams() {
   return allParcels().map(({ parcel }) => ({ id: parcel.id }));
 }
 
+/*
+  Every report is prerendered at build time from the seeded datasets, and an id
+  outside that set is a 404 rather than a server render. Reports are therefore
+  static HTML end to end: nothing to cold-start, nothing to time out, and no
+  upstream call in the request path.
+*/
+export const dynamicParams = false;
+
 const fmt = (n: number) => n.toFixed(2);
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(2)}`;
 

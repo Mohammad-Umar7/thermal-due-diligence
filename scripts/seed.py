@@ -259,7 +259,9 @@ def build(city):
             "fortyguardMinusNoaaMaxC": round(station_tile[4] - max(july_recent), 2) if july_recent else None,
         },
         "parcels": parcels,
-        "grid": downsample(rows),
+        # The full tile field stays in data/metro/ rather than shipping with the
+        # app. Nothing in the UI reads it, and 550 KB of unread JSON is 550 KB
+        # the browser still has to fetch.
     }
     return record
 

@@ -43,3 +43,5 @@ next-env.d.ts
 # scaffolded
 /.next/
 /node_modules
+
+.vercel
