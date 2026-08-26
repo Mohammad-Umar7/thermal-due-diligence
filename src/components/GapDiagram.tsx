@@ -16,7 +16,7 @@
  * segment as it passes. Nothing else on the page animates.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 export interface GapDiagramProps {
   /** Published-era design condition at the reference station, degrees C. */
@@ -46,43 +46,76 @@ export function GapDiagram({
   const combinedC = Math.round((temporalC + spatialC) * 100) / 100;
   const parcelC = Math.round((standardC + combinedC) * 100) / 100;
 
-  const [drawn, setDrawn] = useState(0);
+  /*
+    The finished diagram is the default state, not the end state of an
+    animation. It renders correctly on the server, without JavaScript, under
+    reduced-motion, and when requestAnimationFrame is throttled - which browsers
+    do to backgrounded and non-compositing tabs. Motion is added on top only
+    when we can be sure it will actually complete.
+  */
+  const [drawn, setDrawn] = useState(1);
   const hostRef = useRef<HTMLDivElement>(null);
 
-  // Draw once, when the diagram first comes into view.
-  useEffect(() => {
+  useLayoutEffect(() => {
     const host = hostRef.current;
-    if (!host) return;
+    if (!host || typeof window === "undefined") return;
 
-    const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setDrawn(1);
-      return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      typeof IntersectionObserver === "undefined"
+    ) {
+      return; // stays fully drawn
     }
+
+    const DURATION = 1150;
+    let raf = 0;
+    let started = false;
+    let done = false;
+
+    const finish = () => {
+      done = true;
+      setDrawn(1);
+    };
+
+    /*
+      A single watchdog, armed at mount rather than at intersection.
+      Neither IntersectionObserver nor requestAnimationFrame is guaranteed to
+      fire on a page the browser is not painting, so anything that hangs off
+      them cannot be the only route back to the finished state.
+    */
+    const watchdog = window.setTimeout(() => {
+      if (!done) finish();
+    }, 2500);
+
+    setDrawn(0);
 
     const io = new IntersectionObserver(
       (entries) => {
-        if (!entries.some((e) => e.isIntersecting)) return;
+        if (done || started || !entries.some((e) => e.isIntersecting)) return;
+        started = true;
         io.disconnect();
-        const DURATION = 1150;
-        let raf = 0;
-        const started = performance.now();
+
+        const t0 = performance.now();
         const tick = (now: number) => {
-          const t = Math.min(1, (now - started) / DURATION);
+          if (done) return;
+          const t = Math.min(1, (now - t0) / DURATION);
           // Ease-out cubic: the level rises quickly then settles, the way a
           // staff reading resolves.
           setDrawn(1 - Math.pow(1 - t, 3));
           if (t < 1) raf = requestAnimationFrame(tick);
+          else done = true;
         };
         raf = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(raf);
       },
       { threshold: 0.35 },
     );
     io.observe(host);
-    return () => io.disconnect();
+
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+      clearTimeout(watchdog);
+    };
   }, []);
 
   // Geometry. The vertical axis is degrees; segments are drawn to scale.
