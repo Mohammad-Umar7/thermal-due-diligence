@@ -15,6 +15,7 @@ using the published method, so the whole computation can be shown.
 
 import gzip
 import os
+import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,15 +38,32 @@ STATIONS = {
 
 
 def fetch_year(usaf, wban, year):
-    """Return raw ISD-Lite text for one station-year, caching to disk."""
+    """
+    Return raw ISD-Lite text for one station-year, caching to disk.
+
+    Returns None when the archive has no file for that station-year. Station
+    identifiers change over time (relocations, WBAN reassignments), so gaps are
+    normal for older years. Callers must record the gap rather than silently
+    treating the year as having no hot hours, which would bias any percentile
+    downward.
+    """
     os.makedirs(CACHE, exist_ok=True)
     path = os.path.join(CACHE, "%s-%s-%d.txt" % (usaf, wban, year))
+    miss = path + ".missing"
     if os.path.exists(path):
         with open(path, encoding="utf-8") as fh:
             return fh.read()
+    if os.path.exists(miss):
+        return None
     url = "https://www.ncei.noaa.gov/pub/data/noaa/isd-lite/%d/%s-%s-%d.gz" % (year, usaf, wban, year)
-    with urllib.request.urlopen(url, timeout=120) as resp:
-        text = gzip.decompress(resp.read()).decode("utf-8", "replace")
+    try:
+        with urllib.request.urlopen(url, timeout=120) as resp:
+            text = gzip.decompress(resp.read()).decode("utf-8", "replace")
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            open(miss, "w").close()
+            return None
+        raise
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(text)
     return text
@@ -69,14 +87,21 @@ def parse(text):
 def load_hours(city, years):
     """All valid hourly dry-bulb observations across `years`, plus a coverage report."""
     st = STATIONS[city]
-    obs, coverage = [], {}
+    obs, coverage, missing = [], {}, []
     for year in years:
         text = fetch_year(st["usaf"], st["wban"], year)
+        expected = 8784 if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)) else 8760
+        if text is None:
+            missing.append(year)
+            coverage[year] = {"observations": 0, "expected_hours": expected,
+                              "coverage_pct": 0.0, "archive_gap": True}
+            continue
         rows = list(parse(text))
         obs.extend(rows)
-        expected = 8784 if (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)) else 8760
         coverage[year] = {"observations": len(rows), "expected_hours": expected,
                           "coverage_pct": round(100.0 * len(rows) / expected, 2)}
+    if missing:
+        coverage["_missing_years"] = missing
     return obs, coverage
 
 
