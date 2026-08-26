@@ -11,3 +11,6 @@ next-env.d.ts
 .DS_Store
 /cache/
 /data/raw/
+data/noaa/
+data/metro/*.ndjson
+data/probes/*.full.json
