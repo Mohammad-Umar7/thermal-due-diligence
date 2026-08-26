@@ -9,7 +9,8 @@ the one the construction industry is using.
 
 Built for **FortyGuard Hackathon'26** · Track 02, Future Buildings & Energy.
 
-**Live demo:** _(deploying)_
+**Repo:** <https://github.com/Mohammad-Umar7/thermal-due-diligence>  
+**Live demo:** _pending — connect the repo at vercel.com/new (auto-detects Next.js, no configuration needed)_
 
 ---
 
