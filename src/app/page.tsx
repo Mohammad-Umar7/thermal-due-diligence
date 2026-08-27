@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AddressSearch } from "@/components/AddressSearch";
 import { GapDiagram } from "@/components/GapDiagram";
 import { Footer, Masthead } from "@/components/Document";
 import { FEATURED_CITY, buildReport, getCity, listCities } from "@/lib/report";
@@ -8,6 +9,7 @@ export default function Home() {
   // The landing state argues with a real, pre-computed parcel - never a mockup.
   const hero = city.parcels.reduce((a, b) => (b.spatialOffsetC > a.spatialOffsetC ? b : a));
   const report = buildReport(city, hero);
+  const covered = listCities().filter((c) => c.raster).map((c) => c.label);
 
   return (
     <>
@@ -32,6 +34,10 @@ export default function Home() {
             parcel: the climate has moved since the window closed, and the
             parcel is not the station. Both are measurable.
           </p>
+
+          <div className="mt-8 max-w-2xl rounded-[4px] border border-rule bg-surface p-5">
+            <AddressSearch covered={covered} />
+          </div>
         </section>
 
         {/* ---- the signature element ---- */}

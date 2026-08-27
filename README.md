@@ -7,6 +7,12 @@ A parcel-level thermal survey for property due diligence. Enter a US address and
 get the design temperature that actually applies there — and how far it is from
 the one the construction industry is using.
 
+Lookup is instant and runs entirely in the browser: each surveyed metro's
+temperature field is measured once and shipped as a 180–320 KB raster, so there
+is no API call, no key and no server in the request path. Five metros are
+surveyed so far — Houston, Phoenix, Las Vegas, Austin and Miami — and an address
+outside them says so plainly rather than guessing.
+
 Built for **FortyGuard Hackathon'26** · Track 02, Future Buildings & Energy.
 
 **Repo:** <https://github.com/Mohammad-Umar7/thermal-due-diligence>  
@@ -143,7 +149,11 @@ To regenerate the seed data you need a FortyGuard key in `.env.local`
 ```bash
 python scripts/metro_probe.py houston    # one request, whole metro, whole month
 python scripts/seed.py                   # rebuild src/data/cities/
+python scripts/rasterize.py              # rebuild public/rasters/*.bin
 ```
+
+Adding a metro is one FortyGuard request (4,220 credits) plus a rerun of those
+last two scripts.
 
 ## What we learned about the API
 

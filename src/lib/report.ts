@@ -56,7 +56,8 @@ export interface CityRecord {
     fortyguardMinusNoaaMaxC: number | null;
   };
   parcels: ParcelRecord[];
-  grid: [number, number, number][];
+  /** Header for the metro's Int16 temperature raster; see lib/raster.ts. */
+  raster?: import("./raster").RasterHeader;
 }
 
 export interface ParcelRecord {
@@ -99,6 +100,44 @@ export function allParcels(): { city: CityRecord; parcel: ParcelRecord }[] {
 
 export function findParcel(id: string): { city: CityRecord; parcel: ParcelRecord } | null {
   return allParcels().find((x) => x.parcel.id === id) ?? null;
+}
+
+/**
+ * Turn a geocoded point into the same shape a seeded parcel has, so a looked-up
+ * address and a showcase parcel render through exactly one code path. If the
+ * two diverged, the demo would be showing something the search could not.
+ */
+export function parcelFromLookup(input: {
+  matchedAddress: string;
+  lat: number;
+  lon: number;
+  peakC: number;
+  cellDistanceM: number;
+  metroPercentile: number;
+  stationPeakC: number;
+}): ParcelRecord {
+  return {
+    id: "lookup",
+    label: titleCaseAddress(input.matchedAddress),
+    kind: "searched address",
+    address: input.matchedAddress,
+    lat: input.lat,
+    lon: input.lon,
+    tileDistanceM: Math.round(input.cellDistanceM),
+    // Only the peak is measured for a looked-up point; the raster carries the
+    // monthly maximum, which is the statistic the design gap is built from.
+    tile: { avgC: NaN, minC: NaN, maxC: input.peakC },
+    spatialOffsetC: Math.round((input.peakC - input.stationPeakC) * 100) / 100,
+    metroPercentile: input.metroPercentile,
+  };
+}
+
+/** Census returns SHOUTED addresses; this makes them readable as a heading. */
+function titleCaseAddress(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/\b([a-z])/g, (m) => m.toUpperCase())
+    .replace(/\b(Tx|Az|Nv|Fl|Ca|Ny|Nw|Ne|Sw|Se|Us)\b/g, (m) => m.toUpperCase());
 }
 
 /** One traceable line of arithmetic behind a displayed figure. */
