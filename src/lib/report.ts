@@ -7,11 +7,7 @@
  * `provenance` to the request or record it came from.
  */
 
-import austin from "@/data/cities/austin.json";
-import houston from "@/data/cities/houston.json";
-import lasvegas from "@/data/cities/lasvegas.json";
-import miami from "@/data/cities/miami.json";
-import phoenix from "@/data/cities/phoenix.json";
+import { CITY_JSON, CITY_ORDER } from "@/data/cities/index";
 import { computeGap, type GapComponents } from "./climate/design-condition";
 
 export interface CityRecord {
@@ -73,21 +69,24 @@ export interface ParcelRecord {
   metroPercentile: number;
 }
 
-const CITIES: Record<string, CityRecord> = {
-  houston: houston as unknown as CityRecord,
-  phoenix: phoenix as unknown as CityRecord,
-  lasvegas: lasvegas as unknown as CityRecord,
-  austin: austin as unknown as CityRecord,
-  miami: miami as unknown as CityRecord,
-};
+const CITIES = CITY_JSON as Record<string, CityRecord>;
 
-/** Houston leads: largest defensible gap, and the closest model-observation agreement. */
-export const FEATURED_CITY = "houston";
+/**
+ * Houston leads the landing page: the largest defensible gap of the surveyed
+ * metros, and the closest FortyGuard-to-NOAA agreement at its station, which is
+ * what the spatial component rests on. Falls back to the first surveyed metro
+ * if Houston is ever absent from the seed.
+ */
+export const FEATURED_CITY = CITIES.houston ? "houston" : (CITY_ORDER[0] ?? "");
 
+/** Every surveyed metro, largest urban footprint first. */
 export function listCities(): CityRecord[] {
-  return [
-    CITIES.houston, CITIES.phoenix, CITIES.lasvegas, CITIES.austin, CITIES.miami,
-  ].filter(Boolean);
+  return CITY_ORDER.map((c) => CITIES[c]).filter(Boolean);
+}
+
+/** Only those with a temperature raster, i.e. those an address lookup can answer. */
+export function searchableCities(): CityRecord[] {
+  return listCities().filter((c) => c.raster);
 }
 
 export function getCity(city: string): CityRecord | null {

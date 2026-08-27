@@ -54,7 +54,19 @@ export function AddressSearch({
         </button>
       </div>
       <p className="mt-2 text-[12px] text-ink-faint">
-        Surveyed metros: {covered.join(" · ")}. FortyGuard covers the United States only.
+        {covered.length > 6 ? (
+          <>
+            {covered.length} US metros surveyed, including {covered.slice(0, 4).join(", ")} —{" "}
+            <a className="text-survey underline underline-offset-2" href="/method/#coverage">
+              see the full list
+            </a>
+            . FortyGuard covers the United States only.
+          </>
+        ) : (
+          <>
+            Surveyed metros: {covered.join(" · ")}. FortyGuard covers the United States only.
+          </>
+        )}
       </p>
     </form>
   );

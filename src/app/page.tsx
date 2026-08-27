@@ -2,14 +2,28 @@ import Link from "next/link";
 import { AddressSearch } from "@/components/AddressSearch";
 import { GapDiagram } from "@/components/GapDiagram";
 import { Footer, Masthead } from "@/components/Document";
-import { FEATURED_CITY, buildReport, getCity, listCities } from "@/lib/report";
+import { FEATURED_CITY, buildReport, getCity, listCities, searchableCities } from "@/lib/report";
 
 export default function Home() {
   const city = getCity(FEATURED_CITY)!;
   // The landing state argues with a real, pre-computed parcel - never a mockup.
   const hero = city.parcels.reduce((a, b) => (b.spatialOffsetC > a.spatialOffsetC ? b : a));
   const report = buildReport(city, hero);
-  const covered = listCities().filter((c) => c.raster).map((c) => c.label);
+  const covered = searchableCities().map((c) => c.label);
+  const all = listCities();
+  // With dozens of metros a full table stops being readable. Show the widest
+  // spatial spreads - the places where the standard is most wrong - and send
+  // the reader to the coverage clause for the rest.
+  const tableCities =
+    all.length <= 12
+      ? all
+      : [...all]
+          .sort(
+            (a, b) =>
+              b.fortyguard.peakOffsetC.max - b.fortyguard.peakOffsetC.min -
+              (a.fortyguard.peakOffsetC.max - a.fortyguard.peakOffsetC.min),
+          )
+          .slice(0, 10);
 
   return (
     <>
@@ -152,7 +166,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {listCities().map((c) => {
+                {tableCities.map((c) => {
                   const temporal = c.noaa.design04RecentC - c.noaa.design04HistoricC;
                   return (
                     <tr key={c.city} className="border-b border-rule">
@@ -181,6 +195,16 @@ export default function Home() {
             Temporal is degrees Celsius, the same 0.4% design statistic recomputed
             on 2019–2024 against each station&rsquo;s historic window. Spatial range
             is the span of parcel offsets across the surveyed area, July 2024.
+            {all.length > tableCities.length ? (
+              <>
+                {" "}
+                Showing the {tableCities.length} widest spreads of {all.length} surveyed metros —{" "}
+                <a className="text-survey underline underline-offset-2" href="/method/#coverage">
+                  full coverage list
+                </a>
+                .
+              </>
+            ) : null}
           </p>
         </section>
       </main>

@@ -237,6 +237,7 @@ parcel design = published standard + combined`}
 
         <Clause
           n="6"
+          id="coverage"
           title="Coverage"
           lede={`${cities.filter((c) => c.raster).length} metros surveyed so far. Adding another is one FortyGuard request.`}
         >

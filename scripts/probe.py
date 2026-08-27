@@ -69,12 +69,12 @@ def credits():
     return data.get("credit_summary", {}).get("total_credits_used")
 
 
-def poll(activity_id, timeout_s=600, interval=5):
+def poll(activity_id, timeout_s=600, interval=5, read_timeout=900):
     """Poll to completion. A 404 shortly after submit means 'not ready', not fatal."""
     started = time.time()
     consecutive_404 = 0
     while time.time() - started < timeout_s:
-        code, data = request("GET", "/status/%s" % activity_id)
+        code, data = request("GET", "/status/%s" % activity_id, timeout=read_timeout)
         if code == 404:
             consecutive_404 += 1
             if consecutive_404 > 12:

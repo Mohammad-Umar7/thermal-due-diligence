@@ -8,7 +8,10 @@ import { Footer, Masthead } from "@/components/Document";
 import { ReportBody } from "@/components/ReportBody";
 import { GeocodeError, geocode } from "@/lib/geocode";
 import { RasterError, cellDistanceM, covers, loadRaster, percentileOf, sample } from "@/lib/raster";
-import { buildReport, listCities, parcelFromLookup, type CityRecord, type Report } from "@/lib/report";
+import {
+  buildReport, listCities, parcelFromLookup, searchableCities,
+  type CityRecord, type Report,
+} from "@/lib/report";
 
 type State =
   | { phase: "idle" }
@@ -48,7 +51,7 @@ function Lookup() {
   const query = params.get("q") ?? "";
   const [state, setState] = useState<State>({ phase: "idle" });
   const cities = listCities();
-  const coveredNames = cities.filter((c) => c.raster).map((c) => c.label);
+  const coveredNames = searchableCities().map((c) => c.label);
 
   useEffect(() => {
     if (!query) {
@@ -153,7 +156,7 @@ function Lookup() {
           <Failure
             title={state.title}
             detail={state.detail}
-            covered={state.showCovered ? cities.filter((c) => c.raster) : []}
+            covered={state.showCovered ? searchableCities() : []}
           />
         ) : null}
 

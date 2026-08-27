@@ -21,20 +21,26 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(ROOT, "data", "noaa")
 
-# Reference stations. These are the first-order airport stations whose records
-# underlie the published design conditions the construction industry uses.
-STATIONS = {
-    "phoenix":  {"usaf": "722780", "wban": "23183", "name": "Phoenix Sky Harbor Intl, AZ",
-                 "lat": 33.4278, "lon": -112.0038, "elev_m": 337},
-    "lasvegas": {"usaf": "723860", "wban": "23169", "name": "Las Vegas Harry Reid Intl, NV",
-                 "lat": 36.0719, "lon": -115.1633, "elev_m": 664},
-    "houston":  {"usaf": "722430", "wban": "12960", "name": "Houston George Bush Intercontinental, TX",
-                 "lat": 29.9902, "lon": -95.3368, "elev_m": 29},
-    "miami":    {"usaf": "722020", "wban": "12839", "name": "Miami Intl, FL",
-                 "lat": 25.7906, "lon": -80.3164, "elev_m": 3},
-    "austin":   {"usaf": "722540", "wban": "13904", "name": "Austin-Bergstrom Intl, TX",
-                 "lat": 30.1830, "lon": -97.6799, "elev_m": 148},
-}
+# Reference stations, loaded from data/metros.json - the plan produced by
+# scripts/metros.py from the NOAA station history. Keeping one source of truth
+# means a station can never differ between the survey request and the analysis.
+def _load_stations():
+    path = os.path.join(ROOT, "data", "metros.json")
+    if not os.path.exists(path):
+        return {}
+    import json as _json
+    out = {}
+    for m in _json.load(open(path, encoding="utf-8")):
+        s = m["station"]
+        out[m["city"]] = {
+            "usaf": s["usaf"], "wban": s["wban"],
+            "name": "%s, %s" % (s["name"], s["state"]) if s.get("state") else s["name"],
+            "lat": s["lat"], "lon": s["lon"], "elev_m": s.get("elev_m", 0.0),
+        }
+    return out
+
+
+STATIONS = _load_stations()
 
 
 def fetch_year(usaf, wban, year):
