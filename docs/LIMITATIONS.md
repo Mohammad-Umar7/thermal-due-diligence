@@ -83,9 +83,22 @@ city, and we report it per city rather than assuming it.
 
 ## 6. Coverage
 
-- **United States only.** Non-US coordinates return a completed, *empty* result
-  and still consume credits. We detect an empty result and report it as a
-  coverage failure; we never interpret it as a temperature.
+- **The contiguous United States only.** Not merely "the US": Honolulu and
+  Anchorage were both surveyed and both returned a completed, *empty* result —
+  and were charged for it. Hawaii and Alaska are outside FortyGuard's coverage
+  despite the documentation saying "United States". Non-covered coordinates
+  return success with zero tiles rather than an error, so we detect an empty
+  result and report it as a coverage failure; we never interpret it as a
+  temperature.
+- **175 metros, not the whole country.** Each survey is a 30–34 km square around
+  one reference station, covering the built-up core of an urban area. That is
+  roughly 175,000 km² — a large share of where Americans live, and a small share
+  of US land area. An address outside every surveyed box is reported as outside
+  coverage, never answered from the nearest available reading.
+- **Large metros are covered in part, not in full.** Miami–Fort Lauderdale is
+  1,244 sq mi and its centroid sits 46 km from Miami International; no single
+  survey spans both. Where the urban area is much larger than the box, the
+  survey centres on the reference station and covers the core around it.
 - **History begins 2019-01-01.** Earlier dates are rejected. (FortyGuard's
   hackathon FAQ says 2021; the API and its observed behaviour say 2019.)
 - **Forecast reaches +12 hours** and only on heatmap endpoints.
@@ -100,11 +113,13 @@ city, and we report it per city rather than assuming it.
 | Design condition, recent | ~52,600 hourly observations (6 years) |
 | Design condition, historic | ~262,900 hourly observations (30 years) |
 | Spatial offset | 1 month, ~90,000 tiles per metro |
-| Cities characterised | **5** |
+| Metros characterised | **175** |
 
-Five cities is not a national claim. The five here were chosen for heat
-relevance and span two climate types; a sixth could behave differently from all
-of them.
+The metros were selected by an automatic rule — Census urban areas ranked by
+built-up land area, matched to the nearest suitable NOAA first-order station —
+rather than hand-picked, so the set is not curated toward places that make the
+argument look good. It includes metros where the gap is small and metros where
+the station is hotter than most of its own city.
 
 ## 8. What we deliberately do not compute
 

@@ -2,14 +2,16 @@ import Link from "next/link";
 import { AddressSearch } from "@/components/AddressSearch";
 import { GapDiagram } from "@/components/GapDiagram";
 import { Footer, Masthead } from "@/components/Document";
-import { FEATURED_CITY, buildReport, getCity, listCities, searchableCities } from "@/lib/report";
+import {
+  FEATURED_CITY, buildReport, getCity, listCities, prettyPlace, searchableCities, shortMetro,
+} from "@/lib/report";
 
 export default function Home() {
   const city = getCity(FEATURED_CITY)!;
   // The landing state argues with a real, pre-computed parcel - never a mockup.
   const hero = city.parcels.reduce((a, b) => (b.spatialOffsetC > a.spatialOffsetC ? b : a));
   const report = buildReport(city, hero);
-  const covered = searchableCities().map((c) => c.label);
+  const covered = searchableCities().map((c) => shortMetro(c.label));
   const all = listCities();
   // With dozens of metros a full table stops being readable. Show the widest
   // spatial spreads - the places where the standard is most wrong - and send
@@ -20,8 +22,8 @@ export default function Home() {
       : [...all]
           .sort(
             (a, b) =>
-              b.fortyguard.peakOffsetC.max - b.fortyguard.peakOffsetC.min -
-              (a.fortyguard.peakOffsetC.max - a.fortyguard.peakOffsetC.min),
+              b.fortyguard.peakOffsetC.p99 - b.fortyguard.peakOffsetC.p1 -
+              (a.fortyguard.peakOffsetC.p99 - a.fortyguard.peakOffsetC.p1),
           )
           .slice(0, 10);
 
@@ -58,12 +60,12 @@ export default function Home() {
         <section className="rounded-[4px] border border-rule bg-surface p-5 shadow-[var(--shadow-card)] sm:p-8">
           <div className="mb-6 flex flex-wrap items-baseline justify-between gap-3">
             <div>
-              <p className="label">Worked example</p>
+              <p className="label">Worked example · {shortMetro(city.label)}</p>
               <h2 className="mt-1 font-display text-[20px] font-semibold">
-                {hero.label}, {city.label}
+                {prettyPlace(hero.label)}
               </h2>
             </div>
-            <p className="figure text-[12px] text-ink-faint">{hero.address}</p>
+            <p className="figure text-[12px] text-ink-faint">{prettyPlace(hero.address)}</p>
           </div>
 
           <GapDiagram
@@ -71,7 +73,7 @@ export default function Home() {
             temporalC={report.gap.temporalC}
             spatialC={report.gap.spatialC}
             stationName={city.station.name}
-            parcelLabel={hero.label}
+            parcelLabel={prettyPlace(hero.label)}
             standardWindow={city.noaa.historicWindow}
             recentWindow={city.noaa.recentWindow}
           />
@@ -102,7 +104,7 @@ export default function Home() {
             Three parcels, one click each
           </h2>
           <p className="mt-2 max-w-2xl text-[14.5px] leading-relaxed text-ink-muted">
-            All in {city.label}, all measured against the same station in the
+            All in {shortMetro(city.label)}, all measured against the same station in the
             same request. The standard is wrong in both directions — one of
             these is <em>cooler</em> than the number its engineer would use.
           </p>
@@ -119,9 +121,9 @@ export default function Home() {
                   >
                     <span className="label">{p.kind}</span>
                     <span className="mt-1.5 font-display text-[17px] font-semibold leading-snug">
-                      {p.label}
+                      {prettyPlace(p.label)}
                     </span>
-                    <span className="mt-1 text-[12px] text-ink-faint">{p.address}</span>
+                    <span className="mt-1 text-[12px] text-ink-faint">{prettyPlace(p.address)}</span>
                     <span className="mt-4 flex items-baseline gap-2 border-t border-rule pt-3">
                       <span
                         className="figure text-[22px] font-semibold"
@@ -170,7 +172,7 @@ export default function Home() {
                   const temporal = c.noaa.design04RecentC - c.noaa.design04HistoricC;
                   return (
                     <tr key={c.city} className="border-b border-rule">
-                      <td className="py-2.5 font-medium">{c.label}</td>
+                      <td className="py-2.5 font-medium">{shortMetro(c.label)}</td>
                       <td className="py-2.5 text-ink-muted">
                         {c.station.name.replace(/, [A-Z]{2}$/, "")}
                       </td>
@@ -179,8 +181,9 @@ export default function Home() {
                         {Math.abs(temporal).toFixed(2)}
                       </td>
                       <td className="figure py-2.5 text-right text-ink-muted">
-                        {c.fortyguard.peakOffsetC.min.toFixed(2)} to +
-                        {c.fortyguard.peakOffsetC.max.toFixed(2)}
+                        {c.fortyguard.peakOffsetC.p1.toFixed(2)} to{" "}
+                        {c.fortyguard.peakOffsetC.p99 >= 0 ? "+" : ""}
+                        {c.fortyguard.peakOffsetC.p99.toFixed(2)}
                       </td>
                       <td className="figure py-2.5 text-right">
                         {c.fortyguard.pctMetroHotterThanStation.toFixed(0)}%
@@ -194,7 +197,8 @@ export default function Home() {
           <p className="mt-4 text-[12px] text-ink-faint">
             Temporal is degrees Celsius, the same 0.4% design statistic recomputed
             on 2019–2024 against each station&rsquo;s historic window. Spatial range
-            is the span of parcel offsets across the surveyed area, July 2024.
+            is the 1st-to-99th percentile span of parcel offsets across the surveyed
+            area, July 2024.
             {all.length > tableCities.length ? (
               <>
                 {" "}

@@ -18,8 +18,11 @@ import json
 import math
 import os
 import sys
+import array
+import threading
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from noaa import (  # noqa: E402
@@ -34,6 +37,8 @@ from noaa import (  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "src", "data", "cities")
 METRO_DIR = os.path.join(ROOT, "data", "metro")
+RASTER_DIR = os.path.join(ROOT, "public", "rasters")
+HEADER_DIR = os.path.join(ROOT, "data", "rasters")
 
 HISTORIC = range(1991, 2021)
 RECENT = range(2019, 2025)
@@ -57,7 +62,7 @@ def geocode(address):
     )
     url = "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?" + q
     try:
-        with urllib.request.urlopen(url, timeout=60) as resp:
+        with urllib.request.urlopen(url, timeout=20) as resp:
             data = json.load(resp)
     except Exception:
         return None
@@ -69,22 +74,86 @@ def geocode(address):
 
 
 def place_name(lat, lon):
-    """Census place containing a point, for labelling a derived parcel."""
+    """
+    The Census place containing a point, and whether that point is on land.
+
+    A survey over a bay carries real temperatures for the water, and those are
+    the coldest cells in it. San Francisco's coldest cell sits in the Bay inside
+    Emeryville's city limits, so a place name alone does not prove land - the
+    census block's AREALAND does. Returns (name, is_land); name is None when the
+    point is not in any named place.
+    """
     q = urllib.parse.urlencode({
         "x": lon, "y": lat, "benchmark": "Public_AR_Current",
         "vintage": "Current_Current", "format": "json",
     })
     url = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?" + q
     try:
-        with urllib.request.urlopen(url, timeout=60) as resp:
+        with urllib.request.urlopen(url, timeout=15) as resp:
             g = json.load(resp).get("result", {}).get("geographies", {})
     except Exception:
-        return None
+        return None, True
+    blocks = g.get("2020 Census Blocks") or g.get("Census Blocks") or []
+    land = True
+    if blocks:
+        try:
+            land = float(blocks[0].get("AREALAND") or 0) > 0
+        except (TypeError, ValueError):
+            land = True
     for key in ("Incorporated Places", "Census Designated Places", "County Subdivisions", "Counties"):
         entries = g.get(key) or []
         if entries and entries[0].get("NAME"):
-            return entries[0]["NAME"]
-    return None
+            return entries[0]["NAME"], land
+    return None, land
+
+
+def load_raster(city):
+    """
+    The raster is the single source of spatial truth.
+
+    The browser reads it for an address lookup, so the seed must read it too.
+    Reading raw tiles here instead produced reports whose station temperature
+    disagreed with the value the same page computed for a looked-up address,
+    because a raster cell can hold more than one tile.
+    """
+    hp = os.path.join(HEADER_DIR, "%s.json" % city)
+    bp = os.path.join(RASTER_DIR, "%s.bin" % city)
+    if not (os.path.exists(hp) and os.path.exists(bp)):
+        return None, None
+    h = json.load(open(hp, encoding="utf-8"))
+    g = array.array("h")
+    with open(bp, "rb") as fh:
+        g.fromfile(fh, h["width"] * h["height"])
+    return h, g
+
+
+def raster_sample(h, g, lat, lon):
+    j = int(round((lat - h["lat0"]) / h["dLat"]))
+    i = int(round((lon - h["lon0"]) / h["dLon"]))
+    if not (0 <= j < h["height"] and 0 <= i < h["width"]):
+        return None
+    v = g[j * h["width"] + i]
+    return None if v == h["noData"] else v / h["scale"]
+
+
+def raster_cell_centre(h, lat, lon):
+    j = int(round((lat - h["lat0"]) / h["dLat"]))
+    i = int(round((lon - h["lon0"]) / h["dLon"]))
+    return h["lat0"] + j * h["dLat"], h["lon0"] + i * h["dLon"]
+
+
+def raster_values(h, g):
+    """Every cell that carries a measurement, as (lat, lon, degC)."""
+    out = []
+    W, H, nd, sc = h["width"], h["height"], h["noData"], h["scale"]
+    for j in range(H):
+        base = j * W
+        lat = h["lat0"] + j * h["dLat"]
+        for i in range(W):
+            v = g[base + i]
+            if v != nd:
+                out.append((lat, h["lon0"] + i * h["dLon"], v / sc))
+    return out
 
 
 def load_tiles(city):
@@ -120,31 +189,59 @@ def pct_rank(sorted_vals, v):
     return round(100.0 * lo / len(sorted_vals), 1)
 
 
-def derived_parcels(city, rows, station_tile, peaks_sorted):
+def derived_parcels(city, cells, station_peak, peaks_sorted):
     """
-    Showcase parcels taken from the survey itself: the hottest point, the coolest
-    point, and one at the median. Labelled by the Census place that contains
-    them, so a reader knows where they are without a street address.
+    Showcase parcels taken from the survey itself: hottest, median and coolest.
+
+    Walks inward from each extreme until the Census places the point in a named
+    place. Over open water there is no place, and that is the point: a coastal
+    survey's coldest cells sit in the bay - San Francisco's minimum is in San
+    Francisco Bay, Tampa's in Tampa Bay - and quoting those as parcels would be
+    quoting somewhere nobody can build.
     """
-    by_peak = sorted(rows, key=lambda r: r[4])
-    picks = [
-        (by_peak[-1], "Hottest surveyed point", "hottest"),
-        (by_peak[len(by_peak) // 2], "Median parcel", "median"),
-        (by_peak[0], "Coolest surveyed point", "coolest"),
+    by_peak = sorted(cells, key=lambda c: c[2])
+    n = len(by_peak)
+    # p90/p50/p10 rather than the absolute extremes. A coastal survey's tail is
+    # marine air on the shoreline, which says more about the sea breeze than
+    # about how the parcel was built.
+    hi = int(0.90 * (n - 1))
+    lo = int(0.10 * (n - 1))
+    mid = n // 2
+
+    def around(idx):
+        return by_peak[max(0, idx - 150): idx + 150][::-1]
+
+    plans = [
+        (around(hi), "Hot parcel", "hottest"),
+        (around(mid), "Median parcel", "median"),
+        (around(lo), "Cool parcel", "coolest"),
     ]
     out = []
-    for tile, label, kind in picks:
-        name = place_name(tile[0], tile[1])
+    used = set()
+    for candidates, label, kind in plans:
+        chosen = None
+        for cell in candidates[:60]:
+            key = (round(cell[0], 3), round(cell[1], 3))
+            if key in used:
+                continue
+            name, is_land = place_name(cell[0], cell[1])
+            if name and is_land:
+                chosen = (cell, name)
+                used.add(key)
+                break
+        if not chosen:
+            continue
+        cell, name = chosen
         out.append({
             "id": "%s-%s" % (city, kind),
-            "label": "%s — %s" % (label, name) if name else label,
+            "label": "%s — %s" % (label, name),
             "kind": kind,
-            "address": "%s · %.5f, %.5f" % (name or "within the survey", tile[0], tile[1]),
-            "lat": round(tile[0], 6), "lon": round(tile[1], 6),
+            "address": "%s · %.5f, %.5f" % (name, cell[0], cell[1]),
+            "lat": round(cell[0], 6), "lon": round(cell[1], 6),
             "tileDistanceM": 0,
-            "tile": {"avgC": tile[2], "minC": tile[3], "maxC": tile[4]},
-            "spatialOffsetC": round(tile[4] - station_tile[4], 2),
-            "metroPercentile": pct_rank(peaks_sorted, tile[4]),
+            "tile": {"avgC": None, "minC": None, "maxC": cell[2]},
+            "spatialOffsetC": round(cell[2] - station_peak, 2),
+            "metroPercentile": pct_rank(peaks_sorted, cell[2]),
         })
     return out
 
@@ -155,12 +252,17 @@ def build(city, label):
         return None
 
     st = STATIONS[city]
-    station_tile, dist = nearest(rows, st["lat"], st["lon"])
-    if dist > 250:
-        raise ValueError(
-            "%s: station is %.0f m from the nearest tile - it is outside the surveyed "
-            "box, so no offset can be computed against it." % (city, dist)
-        )
+
+    rh, rg = load_raster(city)
+    if not rh:
+        raise ValueError("%s: no raster - run scripts/rasterize.py first" % city)
+    station_peak = raster_sample(rh, rg, st["lat"], st["lon"])
+    if station_peak is None:
+        raise ValueError("%s: the raster has no value at the reference station" % city)
+    c_lat, c_lon = raster_cell_centre(rh, st["lat"], st["lon"])
+    dist = math.hypot((st["lat"] - c_lat) * 111320,
+                      (st["lon"] - c_lon) * 111320 * math.cos(math.radians(st["lat"])))
+    cells = raster_values(rh, rg)
 
     obs_hist, cov_hist = load_hours(city, HISTORIC)
     obs_recent, cov_recent = load_hours(city, RECENT)
@@ -179,8 +281,8 @@ def build(city, label):
 
     july = [t for (y, m, _d, _h, t) in obs_recent if y == 2024 and m == 7]
 
-    peaks_sorted = sorted(r[4] for r in rows)
-    offsets = sorted(r[4] - station_tile[4] for r in rows)
+    peaks_sorted = sorted(c[2] for c in cells)
+    offsets = sorted(v - station_peak for v in peaks_sorted)
     q = lambda a, f: round(a[int(f * (len(a) - 1))], 3)
 
     hist_years = sorted(y for y in cov_hist if isinstance(y, int) and cov_hist[y]["observations"] > 0)
@@ -191,19 +293,25 @@ def build(city, label):
         g = geocode(address)
         if not g:
             continue
-        tile, tdist = nearest(rows, g["lat"], g["lon"])
-        if tdist > 250:
+        v = raster_sample(rh, rg, g["lat"], g["lon"])
+        if v is None:
             continue
+        pc_lat, pc_lon = raster_cell_centre(rh, g["lat"], g["lon"])
+        tdist = math.hypot((g["lat"] - pc_lat) * 111320,
+                           (g["lon"] - pc_lon) * 111320 * math.cos(math.radians(g["lat"])))
         parcels.append({
             "id": "%s-%s" % (city, kind), "label": plabel, "kind": kind,
             "address": g["matched"], "lat": round(g["lat"], 6), "lon": round(g["lon"], 6),
             "tileDistanceM": round(tdist),
-            "tile": {"avgC": tile[2], "minC": tile[3], "maxC": tile[4]},
-            "spatialOffsetC": round(tile[4] - station_tile[4], 2),
-            "metroPercentile": pct_rank(peaks_sorted, tile[4]),
+            "tile": {"avgC": None, "minC": None, "maxC": v},
+            "spatialOffsetC": round(v - station_peak, 2),
+            "metroPercentile": pct_rank(peaks_sorted, v),
         })
-    if not parcels:
-        parcels = derived_parcels(city, rows, station_tile, peaks_sorted)
+    if len(parcels) < 3:
+        have = {p["kind"] for p in parcels}
+        for extra in derived_parcels(city, cells, station_peak, peaks_sorted):
+            if extra["kind"] not in have and len(parcels) < 3:
+                parcels.append(extra)
 
     return {
         "city": city,
@@ -240,10 +348,12 @@ def build(city, label):
             "filterType": meta["filter_type"], "nTiles": len(rows),
             "activityId": meta["activity_id"], "retrievedUtc": meta["retrieved_utc"],
             "stationTile": {
-                "lat": station_tile[0], "lon": station_tile[1], "avgC": station_tile[2],
-                "minC": station_tile[3], "maxC": station_tile[4],
+                "lat": round(c_lat, 6), "lon": round(c_lon, 6),
+                "avgC": None, "minC": None, "maxC": station_peak,
             },
             "stationTileDistanceM": round(dist),
+            # p1/p99 are what the interface quotes: a coastal survey's absolute
+            # extremes sit in open water, so min/max would describe the sea.
             "peakOffsetC": {
                 "min": q(offsets, 0.0), "p1": q(offsets, 0.01), "p25": q(offsets, 0.25),
                 "median": q(offsets, 0.5), "p75": q(offsets, 0.75), "p99": q(offsets, 0.99),
@@ -256,10 +366,11 @@ def build(city, label):
         "validation": {
             "noaaJuly2024MaxC": round(max(july), 2) if july else None,
             "noaaJuly2024MeanC": round(sum(july) / len(july), 2) if july else None,
-            "fortyguardJuly2024MaxC": station_tile[4],
-            "fortyguardMinusNoaaMaxC": round(station_tile[4] - max(july), 2) if july else None,
+            "fortyguardJuly2024MaxC": station_peak,
+            "fortyguardMinusNoaaMaxC": round(station_peak - max(july), 2) if july else None,
         },
         "parcels": parcels,
+        "raster": rh,
     }
 
 
@@ -292,30 +403,46 @@ def write_index(cities, order):
         fh.write("\n".join(lines))
 
 
+def seed_one(entry):
+    city = entry["city"]
+    try:
+        rec = build(city, entry["label"])
+    except Exception as exc:
+        return city, None, str(exc)
+    if not rec:
+        return city, None, "no survey on disk"
+    # Write through a temp file and rename. Seeding runs concurrently and a dev
+    # server watches this directory; writing in place let a reader observe a
+    # half-written file and fail to parse it.
+    final = os.path.join(OUT_DIR, "%s.json" % city)
+    tmp = final + ".part"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(rec, fh, separators=(",", ":"))
+    os.replace(tmp, final)
+    return city, rec, None
+
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     plan = json.load(open(os.path.join(ROOT, "data", "metros.json"), encoding="utf-8"))
     only = set(sys.argv[1:])
+    todo = [e for e in plan if not only or e["city"] in only]
+    print("seeding %d metros" % len(todo), flush=True)
+
     built = []
-    for entry in plan:
-        city = entry["city"]
-        if only and city not in only:
-            continue
-        try:
-            rec = build(city, entry["label"])
-        except Exception as exc:
-            print("%-20s SKIPPED  %s" % (city, exc))
-            continue
-        if not rec:
-            continue
-        with open(os.path.join(OUT_DIR, "%s.json" % city), "w", encoding="utf-8") as fh:
-            json.dump(rec, fh, separators=(",", ":"))
-        built.append(city)
-        temporal = rec["noaa"]["design04RecentC"] - rec["noaa"]["design04HistoricC"]
-        print("%-20s %6d tiles  std %5.2f  temporal %+5.2f  spatial %+5.2f..%+5.2f  %d parcels" % (
-            city, rec["fortyguard"]["nTiles"], rec["noaa"]["design04HistoricC"], temporal,
-            rec["fortyguard"]["peakOffsetC"]["min"], rec["fortyguard"]["peakOffsetC"]["max"],
-            len(rec["parcels"])))
+    lock = threading.Lock()
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        for city, rec, err in pool.map(seed_one, todo):
+            with lock:
+                if err:
+                    print("%-20s SKIPPED  %s" % (city, err), flush=True)
+                    continue
+                built.append(city)
+                temporal = rec["noaa"]["design04RecentC"] - rec["noaa"]["design04HistoricC"]
+                print("%-20s %6d tiles  std %5.2f  temporal %+5.2f  spatial %+5.2f..%+5.2f  %d parcels" % (
+                    city, rec["fortyguard"]["nTiles"], rec["noaa"]["design04HistoricC"], temporal,
+                    rec["fortyguard"]["peakOffsetC"]["min"], rec["fortyguard"]["peakOffsetC"]["max"],
+                    len(rec["parcels"])), flush=True)
 
     # The index must list every seeded file, including ones built on an earlier run.
     existing = sorted(

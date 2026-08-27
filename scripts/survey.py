@@ -88,6 +88,12 @@ def survey(entry):
     done = poll(aid, timeout_s=5400, interval=15, read_timeout=900)
     status = done.get("status")
     if status != "Completed":
+        # TooLarge means the activity finished and was charged, but the gateway
+        # will never serve a result that size. The ticket is worthless - drop it
+        # so a retry submits a fresh, smaller survey instead of resuming a dead
+        # activity forever.
+        if status == "TooLarge" and os.path.exists(ticket):
+            os.remove(ticket)
         log("  %-22s %s after %.0fs" % (city, status, time.time() - t0))
         return {"city": city, "status": str(status), "credits": charged}
 

@@ -25,6 +25,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 METRO = os.path.join(ROOT, "data", "metro")
 CITIES = os.path.join(ROOT, "src", "data", "cities")
 RASTERS = os.path.join(ROOT, "public", "rasters")
+HEADERS = os.path.join(ROOT, "data", "rasters")
 
 NO_DATA = -32768
 MONTH = "2024-07"
@@ -105,6 +106,7 @@ def build(city):
                 holes += 1
 
     os.makedirs(RASTERS, exist_ok=True)
+    os.makedirs(HEADERS, exist_ok=True)
     out = os.path.join(RASTERS, "%s.bin" % city)
     with open(out, "wb") as fh:
         grid.tofile(fh)
@@ -119,22 +121,32 @@ def build(city):
         "bytes": os.path.getsize(out),
         "coveragePct": round(100.0 * covered / (H * W), 1),
     }
-    print("%-10s %dx%d  %d tiles -> %d cells (%.1f%% covered, %d holes filled)  %.0f KB" % (
+    with open(os.path.join(HEADERS, "%s.json" % city), "w", encoding="utf-8") as fh:
+        json.dump(header, fh)
+    print("%-14s %dx%d  %d tiles -> %d cells (%.1f%% covered, %d holes)  %.0f KB" % (
         city, W, H, len(rows), covered, header["coveragePct"], holes,
-        os.path.getsize(out) / 1024))
+        os.path.getsize(out) / 1024), flush=True)
     return header
 
 
+def all_surveyed():
+    """Every metro with a survey on disk, so a new one is picked up automatically."""
+    if not os.path.isdir(METRO):
+        return []
+    tag = "_%s.ndjson" % MONTH
+    return sorted(f[: -len(tag)] for f in os.listdir(METRO) if f.endswith(tag))
+
+
 def main():
-    cities = sys.argv[1:] or ["houston", "phoenix", "lasvegas", "austin", "miami"]
+    cities = sys.argv[1:] or all_surveyed()
+    total = 0
     for city in cities:
         header = build(city)
         if not header:
             continue
-        p = os.path.join(CITIES, "%s.json" % city)
-        rec = json.load(open(p, encoding="utf-8"))
-        rec["raster"] = header
-        json.dump(rec, open(p, "w", encoding="utf-8"), separators=(",", ":"))
+        total += header["bytes"]
+    if total:
+        print("\n%d rasters, %.1f MB total" % (len(cities), total / 1e6))
 
 
 if __name__ == "__main__":

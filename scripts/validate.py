@@ -23,7 +23,10 @@ RASTERS = os.path.join(ROOT, "public", "rasters")
 # wrong with the station match or the parsing, not with the climate.
 DESIGN_MIN_C, DESIGN_MAX_C = 20.0, 52.0
 TEMPORAL_MIN_C, TEMPORAL_MAX_C = -2.0, 5.0
-MAX_SPATIAL_SPAN_C = 20.0
+# Judged on p1..p99, not min/max: a coastal survey's extremes sit on the
+# shoreline or in open water. The Bay Area genuinely spans ~21 C between
+# Emeryville on the bay and Saranap inland, so the bound is generous.
+MAX_SPATIAL_SPAN_C = 26.0
 MIN_NOAA_COVERAGE_PCT = 85.0
 MAX_STATION_TILE_M = 250
 # Beyond this the model and the observations disagree so much at the station
@@ -75,7 +78,7 @@ def check(city):
     if fg["nTiles"] < 20000:
         errs.append("only %d tiles in the survey" % fg["nTiles"])
 
-    span = fg["peakOffsetC"]["max"] - fg["peakOffsetC"]["min"]
+    span = fg["peakOffsetC"]["p99"] - fg["peakOffsetC"]["p1"]
     if span > MAX_SPATIAL_SPAN_C:
         errs.append("spatial span %.2f C is implausibly wide" % span)
     if span < 0.05:
@@ -90,6 +93,9 @@ def check(city):
     # --- parcels --------------------------------------------------------------
     if not rec["parcels"]:
         errs.append("no showcase parcels")
+    kinds = {p["kind"] for p in rec["parcels"]}
+    if len(rec["parcels"]) < 3:
+        warns.append("only %d showcase parcels (%s)" % (len(rec["parcels"]), ", ".join(sorted(kinds))))
     for p in rec["parcels"]:
         if p["tileDistanceM"] > MAX_STATION_TILE_M:
             errs.append("parcel %s is %d m from its tile" % (p["id"], p["tileDistanceM"]))

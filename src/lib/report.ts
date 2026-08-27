@@ -132,11 +132,23 @@ export function parcelFromLookup(input: {
 }
 
 /** Census returns SHOUTED addresses; this makes them readable as a heading. */
+/**
+ * Census returns SHOUTED addresses; this makes them readable as a heading.
+ *
+ * Two-letter tokens stay uppercase rather than being title-cased, so
+ * "WASHINGTON, DC" reads "Washington, DC" and not "Washington, Dc". That covers
+ * every state and territory abbreviation without enumerating them, along with
+ * the directional prefixes (NW, SE) that appear inside street names.
+ */
 function titleCaseAddress(s: string): string {
   return s
-    .toLowerCase()
-    .replace(/\b([a-z])/g, (m) => m.toUpperCase())
-    .replace(/\b(Tx|Az|Nv|Fl|Ca|Ny|Nw|Ne|Sw|Se|Us)\b/g, (m) => m.toUpperCase());
+    .split(/(\s+|,)/)
+    .map((tok) => {
+      const bare = tok.trim();
+      if (bare.length === 2 && /^[A-Za-z]{2}$/.test(bare)) return tok.toUpperCase();
+      return tok.toLowerCase().replace(/\b([a-z])/g, (m) => m.toUpperCase());
+    })
+    .join("");
 }
 
 /** One traceable line of arithmetic behind a displayed figure. */
@@ -273,4 +285,30 @@ export function buildReport(city: CityRecord, parcel: ParcelRecord): Report {
     },
     caveats,
   };
+}
+
+/**
+ * Census names are not written for readers.
+ *
+ * Urban areas arrive as "New York--Jersey City--Newark, NY--NJ" and places as
+ * "Houston CCD" (a county subdivision) or "University CDP" (a census-designated
+ * place). Those suffixes and double hyphens are Census notation, not part of the
+ * name anyone uses, so they are cleaned at display time. The stored records keep
+ * the official strings.
+ */
+export function prettyPlace(name: string): string {
+  return name
+    .replace(/--/g, "–")
+    .replace(/\b(CCD|CDP)\b/g, "")
+    .replace(/\s+,/g, ",")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+$/, "")
+    .replace(/,\s*$/, "");
+}
+
+/** A metro label short enough to sit in a sentence: the first named city and its states. */
+export function shortMetro(label: string): string {
+  const [places, states] = label.split(",").map((s) => s.trim());
+  const first = (places ?? label).split("--")[0].trim();
+  return states ? `${first}, ${states.replace(/--/g, "–")}` : first;
 }

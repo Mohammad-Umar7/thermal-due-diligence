@@ -8,7 +8,7 @@
 
 import { GapDiagram } from "@/components/GapDiagram";
 import { Caveats, Chain, Clause, FieldBlock, HowCalculated } from "@/components/Document";
-import type { Report } from "@/lib/report";
+import { prettyPlace, type Report } from "@/lib/report";
 
 const fmt = (n: number) => n.toFixed(2);
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(2)}`;
@@ -23,9 +23,9 @@ export function ReportBody({ report: r }: { report: Report }) {
       <div className="py-8 sm:py-10">
         <p className="label">Parcel thermal survey</p>
         <h1 className="mt-2 font-display text-[28px] font-semibold leading-tight sm:text-[34px]">
-          {parcel.label}
+          {prettyPlace(parcel.label)}
         </h1>
-        <p className="figure mt-1.5 text-[13px] text-ink-muted">{parcel.address}</p>
+        <p className="figure mt-1.5 text-[13px] text-ink-muted">{prettyPlace(parcel.address)}</p>
 
         <div className="mt-6">
           <FieldBlock
@@ -71,7 +71,7 @@ export function ReportBody({ report: r }: { report: Report }) {
           temporalC={r.gap.temporalC}
           spatialC={r.gap.spatialC}
           stationName={city.station.name}
-          parcelLabel={parcel.label}
+          parcelLabel={prettyPlace(parcel.label)}
           standardWindow={city.noaa.historicWindow}
           recentWindow={city.noaa.recentWindow}
         />
@@ -124,7 +124,7 @@ export function ReportBody({ report: r }: { report: Report }) {
       <Clause
         n="2"
         title="Where this sits in the metro"
-        lede={`Across ${city.fortyguard.nTiles.toLocaleString("en-US")} tiles covering a ${city.fortyguard.boxKm} km square, parcel offsets from the station span ${fmt(city.fortyguard.peakOffsetC.min)} to ${signed(city.fortyguard.peakOffsetC.max)} °C.`}
+        lede={`Across ${city.fortyguard.nTiles.toLocaleString("en-US")} cells covering a ${city.fortyguard.boxKm} km square, parcel offsets from the station span ${fmt(city.fortyguard.peakOffsetC.p1)} to ${signed(city.fortyguard.peakOffsetC.p99)} °C between the 1st and 99th percentile.`}
       >
         <div className="grid gap-4 sm:grid-cols-3">
           <Stat
@@ -148,16 +148,18 @@ export function ReportBody({ report: r }: { report: Report }) {
         <div className="mt-5 overflow-x-auto">
           <table className="w-full min-w-[440px] border-collapse text-[13px]">
             <caption className="label pb-2 text-left">
-              Distribution of parcel offsets from the station, {city.fortyguard.month}
+              Distribution of offsets from the station, {city.fortyguard.month}. A survey over a
+              bay or a coastline includes water cells, so the percentiles describe parcels where
+              the extremes may not.
             </caption>
             <tbody>
               {(
                 [
-                  ["Coolest tile", city.fortyguard.peakOffsetC.min],
+                  ["Coolest cell (may be open water)", city.fortyguard.peakOffsetC.min],
                   ["1st percentile", city.fortyguard.peakOffsetC.p1],
                   ["Median", city.fortyguard.peakOffsetC.median],
                   ["99th percentile", city.fortyguard.peakOffsetC.p99],
-                  ["Hottest tile", city.fortyguard.peakOffsetC.max],
+                  ["Hottest cell", city.fortyguard.peakOffsetC.max],
                 ] as [string, number][]
               ).map(([k, v]) => (
                 <tr key={k} className="border-b border-rule">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Clause, Footer, Masthead } from "@/components/Document";
-import { listCities } from "@/lib/report";
+import { listCities, shortMetro } from "@/lib/report";
 
 export const metadata = {
   title: "How this works — Thermal Due Diligence",
@@ -257,7 +257,7 @@ parcel design = published standard + combined`}
               <tbody>
                 {cities.map((c) => (
                   <tr key={c.city} className="border-b border-rule last:border-b-0">
-                    <td className="px-3 py-2 font-medium">{c.label}</td>
+                    <td className="px-3 py-2 font-medium">{shortMetro(c.label)}</td>
                     <td className="px-3 py-2 text-ink-muted">
                       {c.station.name.replace(/, [A-Z]{2}$/, "")}
                     </td>

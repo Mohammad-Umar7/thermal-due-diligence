@@ -24,16 +24,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 
 MIN_BOX_KM = 30
-MAX_BOX_KM = 34          # ~116,000 tiles. The retrieval ceiling sits between
-                         # 125,454 tiles (40 km New York, retrieved fine) and
-                         # ~160,000 (40 km Atlanta/Chicago, 504 forever). Their
-                         # gateway gives up at 30 s and the result, though charged,
-                         # is then unreadable. 34 km keeps a margin under that.
-                         # server-side, are charged, and then 504 forever: their
-                         # gateway gives up at 30 s and cannot serialise 160,000
-                         # tiles in that time. Verified at 40 km and 52 km.
-                         # 52 km was 270,000 tiles and the status response could not
-                         # be downloaded inside a sane timeout.
+# Retrieval ceiling, learned the expensive way. A survey completes and is charged
+# server-side, then the result has to come back through their gateway, which gives
+# up at 30 s. Measured: 52 km (270,000 tiles) and 40 km (~160,000) 504 forever and
+# are unrecoverable; 40 km New York at 125,454 tiles came back fine; 34 km
+# (~116,000) succeeded 142 times out of 148; 30 km (~90,000) has never failed.
+# 34 is therefore marginal - the six failures were re-run at 30.
+MAX_BOX_KM = 34
 STATION_MARGIN_KM = 4    # keep the station clear of the box edge
 
 
@@ -44,6 +41,16 @@ def haversine_km(a_lat, a_lon, b_lat, b_lon):
     dl = math.radians(b_lon - a_lon)
     h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
     return 2 * R * math.asin(math.sqrt(h))
+
+
+# FortyGuard returns an empty - but still billed - result outside the lower 48.
+# Verified by surveying Honolulu and Anchorage: Completed, zero tiles, charged.
+CONUS_LAT = (24.4, 49.5)
+CONUS_LON = (-125.0, -66.9)
+
+
+def in_contiguous_us(lat, lon):
+    return CONUS_LAT[0] <= lat <= CONUS_LAT[1] and CONUS_LON[0] <= lon <= CONUS_LON[1]
 
 
 def load_stations():
@@ -57,7 +64,13 @@ def load_stations():
             # cannot be fetched, so it is not usable as a reference station.
             if not r["USAF"] or r["USAF"] == "999999":
                 continue
-            if not r["BEGIN"] or not r["END"] or r["BEGIN"] > "19950101" or r["END"] < "20250101":
+            if not r["BEGIN"] or not r["END"] or r["END"] < "20250101":
+                continue
+            # A station that opened later still gives a long historic window;
+            # Austin-Bergstrom opened in 1999 and would otherwise be dropped,
+            # leaving Austin matched to a field 77 km away. The seed records the
+            # window it actually had data for, so this is surfaced, not hidden.
+            if r["BEGIN"] > "20000101":
                 continue
             try:
                 lat, lon = float(r["LAT"]), float(r["LON"])
@@ -65,7 +78,8 @@ def load_stations():
                 continue
             if lat == 0 and lon == 0:
                 continue
-            # Contiguous US plus Alaska and Hawaii; FortyGuard is US-only.
+            if not in_contiguous_us(lat, lon):
+                continue
             out.append({
                 "usaf": r["USAF"], "wban": r["WBAN"],
                 "name": r["STATION NAME"].strip().title(),
@@ -91,6 +105,7 @@ def load_urban_areas():
                 })
             except (ValueError, KeyError):
                 continue
+    out = [u for u in out if in_contiguous_us(u["lat"], u["lon"])]
     out.sort(key=lambda u: -u["sq_mi"])
     return out
 
@@ -146,22 +161,55 @@ def box_for(urban, station):
     need_for_urban = math.sqrt(urban["sq_mi"] * 2.58999)
 
     side = max(MIN_BOX_KM, need_for_station, min(need_for_urban, MAX_BOX_KM))
-    if side > MAX_BOX_KM:
-        return None
-    return c_lat, c_lon, round(side)
+    if side <= MAX_BOX_KM:
+        return c_lat, c_lon, round(side)
+
+    # Too far apart to hold both. Miami--Fort Lauderdale is 1,244 sq mi and its
+    # centroid sits 46 km from Miami International; no box spans both. Centre on
+    # the station instead - it must be inside for any comparison to mean
+    # anything - and cover the core around it. Coverage of the wider sprawl is
+    # reduced, which is honest, where dropping the metro entirely is not.
+    if station_is_reachable(urban, station):
+        return station["lat"], station["lon"], MAX_BOX_KM
+    return None
 
 
-def build(limit):
+def station_is_reachable(urban, station):
+    """
+    Is a station-centred box still a survey OF this urban area?
+
+    Only when the urban area's own reach plus the box's half-extent gets to the
+    station. Miami--Fort Lauderdale is 1,244 sq mi, so a box on Miami
+    International covers a large part of it and qualifies. Concord--Walnut Creek
+    is small and 40 km from SFO, so a box there would survey San Francisco and
+    label it Concord - that does not qualify.
+    """
+    d = haversine_km(urban["lat"], urban["lon"], station["lat"], station["lon"])
+    urban_radius_km = math.sqrt(urban["sq_mi"] * 2.58999) / 2.0
+    return d <= urban_radius_km + MAX_BOX_KM / 2.0 + 5.0
+
+
+def build(limit, existing=None):
+    """
+    Choose metros to survey.
+
+    `existing` is a plan already surveyed. Its entries are kept exactly as they
+    are and their stations reserved, so re-running to add coverage never
+    reshuffles a metro that has already been paid for.
+    """
     stations = load_stations()
     urban = load_urban_areas()
 
-    chosen = []
-    used_slugs = set()
-    used_stations = set()
+    chosen = list(existing or [])
+    used_slugs = {e["city"] for e in chosen}
+    used_stations = {(e["station"]["usaf"], e["station"]["wban"]) for e in chosen}
+    covered_geoids = {e.get("geoid") for e in chosen if e.get("geoid")}
 
     for u in urban:
         if len(chosen) >= limit:
             break
+        if u["geoid"] in covered_geoids or slug(u["name"]) in used_slugs:
+            continue
         # Among stations close enough to share a box with the urban core, prefer
         # the one an engineer would actually be designing against. Published
         # design conditions are tabulated for the primary civil airport, so a
@@ -192,6 +240,7 @@ def build(limit):
 
         chosen.append({
             "city": name,
+            "geoid": u["geoid"],
             "label": u["name"],
             "urban_sq_mi": u["sq_mi"],
             "centre": [round(c_lat, 5), round(c_lon, 5)],
@@ -203,9 +252,24 @@ def build(limit):
 
 
 if __name__ == "__main__":
-    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 60
-    chosen = build(limit)
+    args = [a for a in sys.argv[1:] if a != "--supplement"]
+    supplement = "--supplement" in sys.argv
+    limit = int(args[0]) if args else 60
     out = os.path.join(DATA, "metros.json")
+
+    existing = None
+    if supplement and os.path.exists(out):
+        existing = json.load(open(out, encoding="utf-8"))
+        print("keeping %d already-planned metros, topping up to %d\n" % (len(existing), limit))
+
+    chosen = build(limit, existing)
+    if existing:
+        added = [c for c in chosen if c["city"] not in {e["city"] for e in existing}]
+        print("ADDED %d metros:" % len(added))
+        for c in added:
+            print("  %-20s %-32s %2dkm  %s" % (
+                c["city"], c["label"][:32], c["box_km"], c["station"]["name"][:34]))
+        print()
     json.dump(chosen, open(out, "w", encoding="utf-8"), indent=1)
     print("%-3s %-28s %8s %6s %6s  %s" % ("#", "urban area", "sq_mi", "box", "dist", "station"))
     print("-" * 104)

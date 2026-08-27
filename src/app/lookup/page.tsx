@@ -9,7 +9,7 @@ import { ReportBody } from "@/components/ReportBody";
 import { GeocodeError, geocode } from "@/lib/geocode";
 import { RasterError, cellDistanceM, covers, loadRaster, percentileOf, sample } from "@/lib/raster";
 import {
-  buildReport, listCities, parcelFromLookup, searchableCities,
+  buildReport, listCities, parcelFromLookup, prettyPlace, searchableCities, shortMetro,
   type CityRecord, type Report,
 } from "@/lib/report";
 
@@ -18,7 +18,8 @@ type State =
   | { phase: "working"; step: string }
   | { phase: "done"; report: Report }
   | { phase: "city"; city: CityRecord }
-  | { phase: "error"; title: string; detail: string; showCovered: boolean };
+  | { phase: "error"; title: string; detail: string; showCovered: boolean;
+      near?: { lat: number; lon: number } };
 
 /**
  * A bare city name is not a street address, and the Census geocoder will reject
@@ -51,7 +52,7 @@ function Lookup() {
   const query = params.get("q") ?? "";
   const [state, setState] = useState<State>({ phase: "idle" });
   const cities = listCities();
-  const coveredNames = searchableCities().map((c) => c.label);
+  const coveredNames = searchableCities().map((c) => shortMetro(c.label));
 
   useEffect(() => {
     if (!query) {
@@ -76,8 +77,9 @@ function Lookup() {
           setState({
             phase: "error",
             title: "Outside the surveyed area",
-            detail: `${match.matchedAddress} resolved successfully, but it falls outside every metro surveyed so far. Each survey is one FortyGuard request covering a 30–40 km square; more can be added.`,
+            detail: `${match.matchedAddress} resolved successfully, but it falls outside every surveyed area. Each survey covers a 30–34 km square around one reference station, so a metro's outer suburbs can sit beyond its edge.`,
             showCovered: true,
+            near: { lat: match.lat, lon: match.lon },
           });
           return;
         }
@@ -157,6 +159,7 @@ function Lookup() {
             title={state.title}
             detail={state.detail}
             covered={state.showCovered ? searchableCities() : []}
+            near={state.near}
           />
         ) : null}
 
@@ -185,7 +188,7 @@ function CityPicked({ city }: { city: CityRecord }) {
   const temporal = Math.round((city.noaa.design04RecentC - city.noaa.design04HistoricC) * 100) / 100;
   return (
     <div className="py-12">
-      <p className="label">{city.label} is surveyed</p>
+      <p className="label">{shortMetro(city.label)} is surveyed</p>
       <h1 className="mt-2 font-display text-[26px] font-semibold sm:text-[30px]">
         Pick a parcel, or enter a street address
       </h1>
@@ -207,7 +210,7 @@ function CityPicked({ city }: { city: CityRecord }) {
         />
       </dl>
 
-      <p className="label mt-8 mb-3">Surveyed parcels in {city.label}</p>
+      <p className="label mt-8 mb-3">Surveyed parcels in {shortMetro(city.label)}</p>
       <ul className="grid gap-3 sm:grid-cols-3">
         {city.parcels.map((p) => (
           <li key={p.id}>
@@ -217,9 +220,9 @@ function CityPicked({ city }: { city: CityRecord }) {
             >
               <span className="label">{p.kind}</span>
               <span className="mt-1.5 font-display text-[16px] font-semibold leading-snug">
-                {p.label}
+                {prettyPlace(p.label)}
               </span>
-              <span className="mt-1 text-[11.5px] text-ink-faint">{p.address}</span>
+              <span className="mt-1 text-[11.5px] text-ink-faint">{prettyPlace(p.address)}</span>
               <span className="figure mt-3 border-t border-rule pt-2.5 text-[18px] font-semibold"
                 style={{ color: p.spatialOffsetC >= 0 ? "var(--heat-2)" : "var(--cool)" }}>
                 {p.spatialOffsetC >= 0 ? "+" : "−"}
@@ -257,26 +260,50 @@ function Working({ step }: { step: string }) {
   );
 }
 
+/** Great-circle distance in km, for ranking nearby surveys. */
+function distanceKm(aLat: number, aLon: number, bLat: number, bLon: number): number {
+  const R = 6371;
+  const p1 = (aLat * Math.PI) / 180;
+  const p2 = (bLat * Math.PI) / 180;
+  const dp = p2 - p1;
+  const dl = ((bLon - aLon) * Math.PI) / 180;
+  const h =
+    Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
 function Failure({
   title,
   detail,
   covered,
+  near,
 }: {
   title: string;
   detail: string;
   covered: CityRecord[];
+  near?: { lat: number; lon: number };
 }) {
+  // When the address resolved, rank surveys by how close they actually are.
+  // Offering New York to someone in Santa Monica is not help.
+  const ranked = near
+    ? [...covered]
+        .map((c) => ({ c, km: distanceKm(near.lat, near.lon, c.station.lat, c.station.lon) }))
+        .sort((a, b) => a.km - b.km)
+        .slice(0, 3)
+    : covered.slice(0, 3).map((c) => ({ c, km: NaN }));
   return (
     <div className="py-12">
       <p className="label">Cannot survey this address</p>
       <h1 className="mt-2 font-display text-[26px] font-semibold">{title}</h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-muted">{detail}</p>
 
-      {covered.length > 0 ? (
+      {ranked.length > 0 ? (
         <div className="mt-7">
-          <p className="label mb-3">Try an address in a surveyed metro</p>
+          <p className="label mb-3">
+            {near ? "Nearest surveyed areas" : "Try an address in a surveyed metro"}
+          </p>
           <ul className="grid gap-3 sm:grid-cols-3">
-            {covered.map((c) => {
+            {ranked.map(({ c, km }) => {
               const example = c.parcels[0];
               return (
                 <li key={c.city}>
@@ -284,13 +311,17 @@ function Failure({
                     href={`/report/${example?.id ?? ""}/`}
                     className="flex h-full flex-col rounded-[4px] border border-rule bg-surface p-4 transition-colors hover:border-rule-strong"
                   >
-                    <span className="font-display text-[16px] font-semibold">{c.label}</span>
+                    <span className="font-display text-[16px] font-semibold">{shortMetro(c.label)}</span>
                     <span className="mt-1 text-[12px] text-ink-faint">
-                      {c.fortyguard.boxKm} km survey · {c.station.name.replace(/, [A-Z]{2}$/, "")}
+                      {Number.isFinite(km) ? `${km.toFixed(0)} km away · ` : ""}
+                      {c.fortyguard.boxKm} km survey
+                    </span>
+                    <span className="mt-0.5 text-[11.5px] text-ink-faint">
+                      {c.station.name.replace(/, [A-Z]{2}$/, "")}
                     </span>
                     {example ? (
                       <span className="mt-2 text-[12px] text-survey">
-                        Example: {example.label} →
+                        Example: {prettyPlace(example.label)} →
                       </span>
                     ) : null}
                   </Link>

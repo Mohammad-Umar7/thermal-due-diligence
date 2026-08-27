@@ -164,20 +164,20 @@
   "label": "Washington--Arlington, DC--VA--MD",
   "urban_sq_mi": 1294.442,
   "centre": [
-   38.91547,
-   -77.31504
+   38.87235,
+   -77.03575
   ],
   "box_km": 34,
   "station": {
-   "usaf": "724030",
-   "wban": "93738",
-   "name": "Washington Dulles International Ap",
+   "usaf": "724050",
+   "wban": "13743",
+   "name": "Ronald Reagan Washington Natl Ap",
    "state": "VA",
-   "lat": 38.935,
-   "lon": -77.447,
-   "elev_m": 89.5
+   "lat": 38.847,
+   "lon": -77.035,
+   "elev_m": 4.1
   },
-  "station_dist_km": 23.2
+  "station_dist_km": 5.6
  },
  {
   "city": "detroit",
@@ -207,7 +207,7 @@
    33.46395,
    -111.98358
   ],
-  "box_km": 34,
+  "box_km": 30,
   "station": {
    "usaf": "722780",
    "wban": "23183",
@@ -287,7 +287,7 @@
    38.69419,
    -90.35721
   ],
-  "box_km": 34,
+  "box_km": 30,
   "station": {
    "usaf": "724340",
    "wban": "13994",
@@ -387,7 +387,7 @@
    41.42596,
    -81.72677
   ],
-  "box_km": 34,
+  "box_km": 30,
   "station": {
    "usaf": "725240",
    "wban": "14820",
@@ -2200,26 +2200,6 @@
   "station_dist_km": 15.3
  },
  {
-  "city": "honolulu",
-  "label": "Honolulu, HI",
-  "urban_sq_mi": 145.045,
-  "centre": [
-   21.34138,
-   -157.93695
-  ],
-  "box_km": 30,
-  "station": {
-   "usaf": "911820",
-   "wban": "22521",
-   "name": "Honolulu International Airport",
-   "state": "HI",
-   "lat": 21.324,
-   "lon": -157.939,
-   "elev_m": 1.9
-  },
-  "station_dist_km": 3.9
- },
- {
   "city": "annarbor",
   "label": "Ann Arbor, MI",
   "urban_sq_mi": 143.474,
@@ -2940,26 +2920,6 @@
   "station_dist_km": 6.4
  },
  {
-  "city": "anchorage",
-  "label": "Anchorage, AK",
-  "urban_sq_mi": 91.765,
-  "centre": [
-   61.16929,
-   -149.94108
-  ],
-  "box_km": 30,
-  "station": {
-   "usaf": "702730",
-   "wban": "26451",
-   "name": "Ted Stevens Anchorage Intl",
-   "state": "AK",
-   "lat": 61.169,
-   "lon": -150.028,
-   "elev_m": 38.0
-  },
-  "station_dist_km": 9.3
- },
- {
   "city": "lynchburg",
   "label": "Lynchburg, VA",
   "urban_sq_mi": 91.595,
@@ -2998,5 +2958,572 @@
    "elev_m": 22.1
   },
   "station_dist_km": 8.1
+ },
+ {
+  "city": "miami",
+  "geoid": "56602",
+  "label": "Miami--Fort Lauderdale, FL",
+  "urban_sq_mi": 1244.312,
+  "centre": [
+   25.788,
+   -80.317
+  ],
+  "box_km": 34,
+  "station": {
+   "usaf": "722020",
+   "wban": "12839",
+   "name": "Miami International Airport",
+   "state": "FL",
+   "lat": 25.788,
+   "lon": -80.317,
+   "elev_m": 1.4
+  },
+  "station_dist_km": 46.2
+ },
+ {
+  "city": "austin",
+  "geoid": "04384",
+  "label": "Austin, TX",
+  "urban_sq_mi": 619.603,
+  "centre": [
+   30.28152,
+   -97.7229
+  ],
+  "box_km": 34,
+  "station": {
+   "usaf": "722540",
+   "wban": "13904",
+   "name": "Austin-Bergstrom Intl Airport",
+   "state": "TX",
+   "lat": 30.183,
+   "lon": -97.68,
+   "elev_m": 146.3
+  },
+  "station_dist_km": 23.4
+ },
+ {
+  "city": "bonitasprings",
+  "geoid": "08974",
+  "label": "Bonita Springs--Estero, FL",
+  "urban_sq_mi": 242.989,
+  "centre": [
+   26.19555,
+   -81.76079
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722038",
+   "wban": "12897",
+   "name": "Naples Municipal Airport",
+   "state": "FL",
+   "lat": 26.155,
+   "lon": -81.775,
+   "elev_m": 2.0
+  },
+  "station_dist_km": 9.5
+ },
+ {
+  "city": "canton",
+  "geoid": "13375",
+  "label": "Canton, OH",
+  "urban_sq_mi": 180.206,
+  "centre": [
+   40.94053,
+   -81.44337
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724303",
+   "wban": "14813",
+   "name": "Akron Fulton Intl Airport",
+   "state": "OH",
+   "lat": 41.037,
+   "lon": -81.463,
+   "elev_m": 318.1
+  },
+  "station_dist_km": 21.7
+ },
+ {
+  "city": "concord",
+  "geoid": "19504",
+  "label": "Concord--Walnut Creek, CA",
+  "urban_sq_mi": 175.76,
+  "centre": [
+   37.79146,
+   -121.92488
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724927",
+   "wban": "23285",
+   "name": "Livermore Municipal Arpt",
+   "state": "CA",
+   "lat": 37.693,
+   "lon": -121.815,
+   "elev_m": 119.8
+  },
+  "station_dist_km": 29.2
+ },
+ {
+  "city": "kissimmee",
+  "geoid": "45451",
+  "label": "Kissimmee--St. Cloud, FL",
+  "urban_sq_mi": 161.59,
+  "centre": [
+   28.547,
+   -81.335
+  ],
+  "box_km": 34,
+  "station": {
+   "usaf": "722053",
+   "wban": "12841",
+   "name": "Executive Airport",
+   "state": "FL",
+   "lat": 28.547,
+   "lon": -81.335,
+   "elev_m": 31.7
+  },
+  "station_dist_km": 26.9
+ },
+ {
+  "city": "kalamazoo",
+  "geoid": "43723",
+  "label": "Kalamazoo, MI",
+  "urban_sq_mi": 109.401,
+  "centre": [
+   42.312,
+   -85.241
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725396",
+   "wban": "14815",
+   "name": "W K Kellogg Airport",
+   "state": "MI",
+   "lat": 42.312,
+   "lon": -85.241,
+   "elev_m": 282.5
+  },
+  "station_dist_km": 29.8
+ },
+ {
+  "city": "elkhart",
+  "geoid": "26794",
+  "label": "Elkhart, IN--MI",
+  "urban_sq_mi": 94.937,
+  "centre": [
+   41.59467,
+   -85.85575
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724388",
+   "wban": "14829",
+   "name": "Goshen Municipal Airport",
+   "state": "IN",
+   "lat": 41.527,
+   "lon": -85.787,
+   "elev_m": 251.2
+  },
+  "station_dist_km": 18.9
+ },
+ {
+  "city": "longview",
+  "geoid": "51256",
+  "label": "Longview, TX",
+  "urban_sq_mi": 90.256,
+  "centre": [
+   32.44854,
+   -94.73663
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722470",
+   "wban": "03901",
+   "name": "East Texas Regional Arpt",
+   "state": "TX",
+   "lat": 32.391,
+   "lon": -94.714,
+   "elev_m": 107.3
+  },
+  "station_dist_km": 13.5
+ },
+ {
+  "city": "waco",
+  "geoid": "91027",
+  "label": "Waco, TX",
+  "urban_sq_mi": 89.832,
+  "centre": [
+   31.57978,
+   -97.19601
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722560",
+   "wban": "13959",
+   "name": "Waco Regional Airport",
+   "state": "TX",
+   "lat": 31.618,
+   "lon": -97.228,
+   "elev_m": 151.9
+  },
+  "station_dist_km": 10.4
+ },
+ {
+  "city": "fredericksburg",
+  "geoid": "31600",
+  "label": "Fredericksburg, VA",
+  "urban_sq_mi": 89.476,
+  "centre": [
+   38.39422,
+   -77.4012
+  ],
+  "box_km": 32,
+  "station": {
+   "usaf": "724035",
+   "wban": "13773",
+   "name": "Quantico Mcaf",
+   "state": "VA",
+   "lat": 38.504,
+   "lon": -77.305,
+   "elev_m": 3.1
+  },
+  "station_dist_km": 29.6
+ },
+ {
+  "city": "warnerrobins",
+  "geoid": "91783",
+  "label": "Warner Robins, GA",
+  "urban_sq_mi": 88.316,
+  "centre": [
+   32.61144,
+   -83.62902
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722175",
+   "wban": "13860",
+   "name": "Robins Afb Airport",
+   "state": "GA",
+   "lat": 32.633,
+   "lon": -83.6,
+   "elev_m": 89.6
+  },
+  "station_dist_km": 7.2
+ },
+ {
+  "city": "tuscaloosa",
+  "geoid": "89110",
+  "label": "Tuscaloosa, AL",
+  "urban_sq_mi": 88.163,
+  "centre": [
+   33.20799,
+   -87.57879
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722286",
+   "wban": "93806",
+   "name": "Tuscaloosa Municipal Arpt",
+   "state": "AL",
+   "lat": 33.212,
+   "lon": -87.616,
+   "elev_m": 45.3
+  },
+  "station_dist_km": 7.0
+ },
+ {
+  "city": "cedarrapids",
+  "geoid": "14752",
+  "label": "Cedar Rapids, IA",
+  "urban_sq_mi": 86.037,
+  "centre": [
+   41.93627,
+   -91.69571
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725450",
+   "wban": "14990",
+   "name": "Eastern Iowa Regional Airport",
+   "state": "IA",
+   "lat": 41.883,
+   "lon": -91.725,
+   "elev_m": 256.0
+  },
+  "station_dist_km": 12.8
+ },
+ {
+  "city": "odessa",
+  "geoid": "64864",
+  "label": "Odessa, TX",
+  "urban_sq_mi": 85.995,
+  "centre": [
+   31.91008,
+   -102.29691
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722650",
+   "wban": "23023",
+   "name": "Midland International Airport",
+   "state": "TX",
+   "lat": 31.948,
+   "lon": -102.209,
+   "elev_m": 872.4
+  },
+  "station_dist_km": 18.6
+ },
+ {
+  "city": "palmdale",
+  "geoid": "67140",
+  "label": "Palmdale--Lancaster, CA",
+  "urban_sq_mi": 84.784,
+  "centre": [
+   34.71991,
+   -118.20382
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723816",
+   "wban": "03159",
+   "name": "General William J. Fox Airfield Airport",
+   "state": "CA",
+   "lat": 34.741,
+   "lon": -118.213,
+   "elev_m": 712.6
+  },
+  "station_dist_km": 5.0
+ },
+ {
+  "city": "topeka",
+  "geoid": "88084",
+  "label": "Topeka, KS",
+  "urban_sq_mi": 84.226,
+  "centre": [
+   38.98859,
+   -95.67225
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724565",
+   "wban": "13920",
+   "name": "Forbes Field Airport",
+   "state": "KS",
+   "lat": 38.941,
+   "lon": -95.651,
+   "elev_m": 315.1
+  },
+  "station_dist_km": 11.2
+ },
+ {
+  "city": "lexington-fayette",
+  "geoid": "49582",
+  "label": "Lexington-Fayette, KY",
+  "urban_sq_mi": 84.003,
+  "centre": [
+   38.03014,
+   -84.5537
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724220",
+   "wban": "93820",
+   "name": "Blue Grass Airport",
+   "state": "KY",
+   "lat": 38.034,
+   "lon": -84.611,
+   "elev_m": 293.2
+  },
+  "station_dist_km": 10.1
+ },
+ {
+  "city": "amarillo",
+  "geoid": "01927",
+  "label": "Amarillo, TX",
+  "urban_sq_mi": 83.996,
+  "centre": [
+   35.20601,
+   -101.78197
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723630",
+   "wban": "23047",
+   "name": "Amarillo Rick Husband Intl Airport",
+   "state": "TX",
+   "lat": 35.22,
+   "lon": -101.717,
+   "elev_m": 1099.3
+  },
+  "station_dist_km": 12.2
+ },
+ {
+  "city": "tyler",
+  "geoid": "89326",
+  "label": "Tyler, TX",
+  "urban_sq_mi": 81.533,
+  "centre": [
+   32.33774,
+   -95.35856
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722448",
+   "wban": "13972",
+   "name": "Tyler Pounds Regional Arpt",
+   "state": "TX",
+   "lat": 32.359,
+   "lon": -95.404,
+   "elev_m": 159.5
+  },
+  "station_dist_km": 9.8
+ },
+ {
+  "city": "manchester",
+  "geoid": "53740",
+  "label": "Manchester, NH",
+  "urban_sq_mi": 80.631,
+  "centre": [
+   43.09858,
+   -71.48869
+  ],
+  "box_km": 32,
+  "station": {
+   "usaf": "726050",
+   "wban": "14745",
+   "name": "Concord Municipal Airport",
+   "state": "NH",
+   "lat": 43.205,
+   "lon": -71.503,
+   "elev_m": 103.2
+  },
+  "station_dist_km": 23.8
+ },
+ {
+  "city": "thousandoaks",
+  "geoid": "87490",
+  "label": "Thousand Oaks, CA",
+  "urban_sq_mi": 80.197,
+  "centre": [
+   34.1596,
+   -118.9892
+  ],
+  "box_km": 33,
+  "station": {
+   "usaf": "723910",
+   "wban": "93111",
+   "name": "Point Mugu",
+   "state": "CA",
+   "lat": 34.124,
+   "lon": -119.123,
+   "elev_m": 3.8
+  },
+  "station_dist_km": 25.9
+ },
+ {
+  "city": "santarosa",
+  "geoid": "79498",
+  "label": "Santa Rosa, CA",
+  "urban_sq_mi": 79.392,
+  "centre": [
+   38.47801,
+   -122.76984
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724957",
+   "wban": "23213",
+   "name": "Sonoma County Airport",
+   "state": "CA",
+   "lat": 38.504,
+   "lon": -122.811,
+   "elev_m": 36.2
+  },
+  "station_dist_km": 9.2
+ },
+ {
+  "city": "anniston",
+  "geoid": "02629",
+  "label": "Anniston--Oxford, AL",
+  "urban_sq_mi": 78.895,
+  "centre": [
+   33.62916,
+   -85.84096
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722287",
+   "wban": "13871",
+   "name": "Anniston Metropolitan Arpt",
+   "state": "AL",
+   "lat": 33.59,
+   "lon": -85.848,
+   "elev_m": 181.8
+  },
+  "station_dist_km": 8.8
+ },
+ {
+  "city": "santaclarita",
+  "geoid": "79309",
+  "label": "Santa Clarita, CA",
+  "urban_sq_mi": 77.852,
+  "centre": [
+   34.32088,
+   -118.50705
+  ],
+  "box_km": 32,
+  "station": {
+   "usaf": "722886",
+   "wban": "23130",
+   "name": "Van Nuys Airport",
+   "state": "CA",
+   "lat": 34.212,
+   "lon": -118.491,
+   "elev_m": 239.2
+  },
+  "station_dist_km": 24.4
+ },
+ {
+  "city": "fargo",
+  "geoid": "29089",
+  "label": "Fargo, ND--MN",
+  "urban_sq_mi": 77.733,
+  "centre": [
+   46.89128,
+   -96.8194
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "727530",
+   "wban": "14914",
+   "name": "Hector International Airport",
+   "state": "ND",
+   "lat": 46.924,
+   "lon": -96.812,
+   "elev_m": 272.8
+  },
+  "station_dist_km": 7.4
+ },
+ {
+  "city": "oxnard",
+  "geoid": "66673",
+  "label": "Oxnard--San Buenaventura (Ventura), CA",
+  "urban_sq_mi": 76.596,
+  "centre": [
+   34.22957,
+   -119.20653
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723927",
+   "wban": "93110",
+   "name": "Oxnard Airport",
+   "state": "CA",
+   "lat": 34.2,
+   "lon": -119.204,
+   "elev_m": 11.9
+  },
+  "station_dist_km": 6.6
  }
 ]

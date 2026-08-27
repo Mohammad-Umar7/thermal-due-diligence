@@ -8,10 +8,12 @@ get the design temperature that actually applies there — and how far it is fro
 the one the construction industry is using.
 
 Lookup is instant and runs entirely in the browser: each surveyed metro's
-temperature field is measured once and shipped as a 180–320 KB raster, so there
-is no API call, no key and no server in the request path. Five metros are
-surveyed so far — Houston, Phoenix, Las Vegas, Austin and Miami — and an address
-outside them says so plainly rather than guessing.
+temperature field is measured once and shipped as a compact raster, so there is
+no API call, no key and no server in the request path. **170 US metros** are
+surveyed — the largest urban areas in the contiguous United States, ranked by
+built-up land area. Each survey is a 30–34 km square around one reference
+station, so a metro's outer suburbs can fall outside its edge; when they do, the
+app says so and points at the nearest surveyed area rather than guessing.
 
 Built for **FortyGuard Hackathon'26** · Track 02, Future Buildings & Energy.
 
@@ -52,12 +54,13 @@ FortyGuard does.
 
 ## What we found
 
-Surveying five US metros — ~495,000 tiles at 100 m resolution — produced three
-results worth stating plainly.
+Surveying 170 US metros — roughly 15 million cells at 100 m resolution — produced
+three results worth stating plainly.
 
-**1. The design standard is ~1 °C stale.** Recomputing the same 0.4% statistic on
-2019–2024 instead of 1991–2020 raises it by **+1.10 °C** in Phoenix, Las Vegas and
-Houston, and +0.60 °C in Austin and Miami. This uses only NOAA observations.
+**1. The design standard is roughly 1 °C stale.** Recomputing the same 0.4%
+statistic on 2019–2024 instead of 1991–2020 raises it by about **+1 °C** across
+the surveyed metros. This uses only NOAA observations — no model is involved, so
+this component carries no modelling uncertainty at all.
 
 **2. The airport is not always the hot outlier.** The intuition that reference
 stations sit on cool grass while the city bakes is not generally true:
@@ -174,9 +177,22 @@ Measured against the live API, not read from the docs. Full detail in
   as `no-coverage` and deliberately does not cache it, so an empty
   FeatureCollection can never be read downstream as "zero degrees".
 - `overall_temperature_distribution` is a five-number summary, not a distribution.
+- ⚠️ **There is a hard retrieval ceiling around 125,000 tiles.** A larger survey
+  completes server-side, is charged, and then returns `504` forever — their
+  gateway gives up at 30 s and cannot serialise the result. Measured: 52 km
+  (270,000 tiles) and 40 km (~160,000) are unrecoverable; 40 km New York at
+  125,454 tiles came back; 34 km (~116,000) succeeded 168 of 176 times; 30 km
+  (~90,000) has never failed. This is not in the documentation and cost us
+  eight paid-for, unreadable surveys before we found it.
+- ⚠️ **"United States" means the contiguous 48.** Honolulu and Anchorage each
+  returned `Completed` with zero tiles — and were charged anyway.
 
-Total credits used across all development and all five cities: **~72,000 of
-2,000,000 (3.6%)**.
+Total credits used across all development and all 170 metros: **881,980 of
+2,000,000 (44%)**.
+
+Five metros were surveyed and then **dropped**: their NOAA stations had gap years
+(Poughkeepsie returned 440 usable recent observations instead of ~52,600), so
+their design conditions could not be computed from enough data to defend.
 
 ## Repository
 
