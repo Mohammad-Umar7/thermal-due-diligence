@@ -7,7 +7,7 @@
    40.69758,
    -74.05959
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725020",
    "wban": "14734",
@@ -27,7 +27,7 @@
    33.73243,
    -84.38985
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722190",
    "wban": "13874",
@@ -47,7 +47,7 @@
    41.8072,
    -87.83183
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725340",
    "wban": "14819",
@@ -67,7 +67,7 @@
    39.93011,
    -75.25774
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724080",
    "wban": "13739",
@@ -87,7 +87,7 @@
    29.87851,
    -95.3807
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722430",
    "wban": "12960",
@@ -107,7 +107,7 @@
    32.85399,
    -96.99749
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722590",
    "wban": "03927",
@@ -127,7 +127,7 @@
    42.37,
    -71.07617
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725090",
    "wban": "14739",
@@ -147,7 +147,7 @@
    33.9615,
    -118.2547
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722950",
    "wban": "23174",
@@ -167,7 +167,7 @@
    38.91547,
    -77.31504
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724030",
    "wban": "93738",
@@ -187,7 +187,7 @@
    42.44679,
    -83.11821
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725375",
    "wban": "14822",
@@ -207,7 +207,7 @@
    33.46395,
    -111.98358
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722780",
    "wban": "23183",
@@ -227,7 +227,7 @@
    44.92973,
    -93.25704
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "726580",
    "wban": "14922",
@@ -247,7 +247,7 @@
    47.45383,
    -122.29426
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "727930",
    "wban": "24233",
@@ -267,7 +267,7 @@
    27.98671,
    -82.52918
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722110",
    "wban": "12842",
@@ -287,7 +287,7 @@
    38.69419,
    -90.35721
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724340",
    "wban": "13994",
@@ -307,7 +307,7 @@
    40.47216,
    -80.08708
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725200",
    "wban": "94823",
@@ -327,7 +327,7 @@
    39.1124,
    -84.56629
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724210",
    "wban": "93814",
@@ -347,7 +347,7 @@
    39.77002,
    -86.21303
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724380",
    "wban": "93819",
@@ -364,20 +364,20 @@
   "label": "Kansas City, MO--KS",
   "urban_sq_mi": 714.134,
   "centre": [
-   39.16912,
-   -94.66868
+   38.94262,
+   -94.58318
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
-   "usaf": "724460",
-   "wban": "03947",
-   "name": "Kansas City International Airport",
+   "usaf": "724466",
+   "wban": "03929",
+   "name": "Richard Gebaur",
    "state": "MO",
-   "lat": 39.297,
-   "lon": -94.731,
-   "elev_m": 307.4
+   "lat": 38.844,
+   "lon": -94.56,
+   "elev_m": 321.9
   },
-  "station_dist_km": 30.4
+  "station_dist_km": 22.3
  },
  {
   "city": "cleveland",
@@ -387,7 +387,7 @@
    41.42596,
    -81.72677
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725240",
    "wban": "14820",
@@ -407,7 +407,7 @@
    32.82294,
    -117.15673
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722900",
    "wban": "23188",
@@ -427,7 +427,7 @@
    35.22527,
    -80.88028
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "723140",
    "wban": "13881",
@@ -447,7 +447,7 @@
    39.20474,
    -76.66325
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "724060",
    "wban": "93721",
@@ -467,7 +467,7 @@
    28.49741,
    -81.3725
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722050",
    "wban": "12815",
@@ -487,7 +487,7 @@
    39.78957,
    -104.80769
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "725650",
    "wban": "03017",
@@ -507,7 +507,7 @@
    29.52621,
    -98.50128
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722530",
    "wban": "12921",
@@ -527,7 +527,7 @@
    33.944,
    -117.31626
   ],
-  "box_km": 40,
+  "box_km": 34,
   "station": {
    "usaf": "722860",
    "wban": "23119",
@@ -547,7 +547,7 @@
    36.11845,
    -86.68958
   ],
-  "box_km": 39,
+  "box_km": 34,
   "station": {
    "usaf": "723270",
    "wban": "13897",
@@ -564,20 +564,20 @@
   "label": "Jacksonville, FL",
   "urban_sq_mi": 573.294,
   "centre": [
-   30.37343,
-   -81.66384
+   30.32593,
+   -81.52534
   ],
-  "box_km": 39,
+  "box_km": 34,
   "station": {
-   "usaf": "722060",
-   "wban": "13889",
-   "name": "Jacksonville International Airport",
+   "usaf": "722066",
+   "wban": "03853",
+   "name": "Mayport Naf",
    "state": "FL",
-   "lat": 30.495,
-   "lon": -81.694,
-   "elev_m": 7.2
+   "lat": 30.4,
+   "lon": -81.417,
+   "elev_m": 4.9
   },
-  "station_dist_km": 27.6
+  "station_dist_km": 26.5
  },
  {
   "city": "raleigh",
@@ -587,7 +587,7 @@
    35.83542,
    -78.73071
   ],
-  "box_km": 38,
+  "box_km": 34,
   "station": {
    "usaf": "723060",
    "wban": "13722",
@@ -607,7 +607,7 @@
    41.76232,
    -71.405
   ],
-  "box_km": 38,
+  "box_km": 34,
   "station": {
    "usaf": "725070",
    "wban": "14765",
@@ -627,7 +627,7 @@
    41.85364,
    -72.69244
   ],
-  "box_km": 37,
+  "box_km": 34,
   "station": {
    "usaf": "725080",
    "wban": "14740",
@@ -647,7 +647,7 @@
    45.55588,
    -122.62777
   ],
-  "box_km": 37,
+  "box_km": 34,
   "station": {
    "usaf": "726980",
    "wban": "24229",
@@ -667,7 +667,7 @@
    40.00573,
    -82.9239
   ],
-  "box_km": 37,
+  "box_km": 34,
   "station": {
    "usaf": "724280",
    "wban": "14821",
@@ -687,7 +687,7 @@
    37.75148,
    -122.25154
   ],
-  "box_km": 36,
+  "box_km": 34,
   "station": {
    "usaf": "724930",
    "wban": "23230",
@@ -707,7 +707,7 @@
    37.49869,
    -77.40354
   ],
-  "box_km": 36,
+  "box_km": 34,
   "station": {
    "usaf": "724010",
    "wban": "13740",
@@ -727,7 +727,7 @@
    33.52013,
    -86.76459
   ],
-  "box_km": 36,
+  "box_km": 34,
   "station": {
    "usaf": "722280",
    "wban": "13876",
@@ -747,7 +747,7 @@
    35.07007,
    -89.95064
   ],
-  "box_km": 36,
+  "box_km": 34,
   "station": {
    "usaf": "723340",
    "wban": "13893",
@@ -767,7 +767,7 @@
    36.90915,
    -76.24204
   ],
-  "box_km": 35,
+  "box_km": 34,
   "station": {
    "usaf": "723080",
    "wban": "13737",
@@ -787,7 +787,7 @@
    38.66919,
    -121.46351
   ],
-  "box_km": 35,
+  "box_km": 34,
   "station": {
    "usaf": "724839",
    "wban": "93225",
@@ -807,7 +807,7 @@
    43.00311,
    -87.99505
   ],
-  "box_km": 35,
+  "box_km": 34,
   "station": {
    "usaf": "726400",
    "wban": "14839",
@@ -1084,20 +1084,20 @@
   "label": "Winston-Salem, NC",
   "urban_sq_mi": 310.787,
   "centre": [
-   36.08139,
-   -80.099
+   36.09939,
+   -80.2395
   ],
-  "box_km": 36,
+  "box_km": 30,
   "station": {
-   "usaf": "723170",
-   "wban": "13723",
-   "name": "Piedmont Triad International Airport",
+   "usaf": "723193",
+   "wban": "93807",
+   "name": "Smith Reynolds Airport",
    "state": "NC",
-   "lat": 36.097,
-   "lon": -79.943,
-   "elev_m": 275.0
+   "lat": 36.133,
+   "lon": -80.224,
+   "elev_m": 291.6
   },
-  "station_dist_km": 28.3
+  "station_dist_km": 8.0
  },
  {
   "city": "akron",
@@ -1198,5 +1198,1805 @@
    "elev_m": 204.0
   },
   "station_dist_km": 2.0
+ },
+ {
+  "city": "sanjose",
+  "label": "San Jose, CA",
+  "urban_sq_mi": 285.414,
+  "centre": [
+   37.34811,
+   -121.94074
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724945",
+   "wban": "23293",
+   "name": "N Y. Mineta Sn Jo Intl Apt",
+   "state": "CA",
+   "lat": 37.359,
+   "lon": -121.924,
+   "elev_m": 15.0
+  },
+  "station_dist_km": 3.8
+ },
+ {
+  "city": "grandrapids",
+  "label": "Grand Rapids, MI",
+  "urban_sq_mi": 274.331,
+  "centre": [
+   42.91222,
+   -85.59131
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726350",
+   "wban": "94860",
+   "name": "Gerald R Ford International Airport",
+   "state": "MI",
+   "lat": 42.882,
+   "lon": -85.523,
+   "elev_m": 240.3
+  },
+  "station_dist_km": 13.0
+ },
+ {
+  "city": "augusta-richmondcounty",
+  "label": "Augusta-Richmond County, GA--SC",
+  "urban_sq_mi": 273.315,
+  "centre": [
+   33.42514,
+   -81.98289
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722180",
+   "wban": "03820",
+   "name": "Augusta Regional At Bush Field Ap",
+   "state": "GA",
+   "lat": 33.365,
+   "lon": -81.964,
+   "elev_m": 40.9
+  },
+  "station_dist_km": 13.8
+ },
+ {
+  "city": "albany",
+  "label": "Albany--Schenectady, NY",
+  "urban_sq_mi": 271.348,
+  "centre": [
+   42.74498,
+   -73.79916
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725180",
+   "wban": "14735",
+   "name": "Albany International Airport",
+   "state": "NY",
+   "lat": 42.747,
+   "lon": -73.799,
+   "elev_m": 85.4
+  },
+  "station_dist_km": 0.4
+ },
+ {
+  "city": "omaha",
+  "label": "Omaha, NE--IA",
+  "urban_sq_mi": 270.809,
+  "centre": [
+   41.27204,
+   -95.96853
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725500",
+   "wban": "14942",
+   "name": "Eppley Airfield Airport",
+   "state": "NE",
+   "lat": 41.312,
+   "lon": -95.902,
+   "elev_m": 298.8
+  },
+  "station_dist_km": 14.2
+ },
+ {
+  "city": "neworleans",
+  "label": "New Orleans, LA",
+  "urban_sq_mi": 270.193,
+  "centre": [
+   29.97918,
+   -90.221
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722310",
+   "wban": "12916",
+   "name": "Louis Armstrong New Orleans Intl Ap",
+   "state": "LA",
+   "lat": 29.998,
+   "lon": -90.278,
+   "elev_m": -1.0
+  },
+  "station_dist_km": 11.8
+ },
+ {
+  "city": "littlerock",
+  "label": "Little Rock, AR",
+  "urban_sq_mi": 267.814,
+  "centre": [
+   34.74198,
+   -92.28114
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723403",
+   "wban": "13963",
+   "name": "Adams Field Airport",
+   "state": "AR",
+   "lat": 34.727,
+   "lon": -92.236,
+   "elev_m": 76.4
+  },
+  "station_dist_km": 8.9
+ },
+ {
+  "city": "albuquerque",
+  "label": "Albuquerque, NM",
+  "urban_sq_mi": 263.068,
+  "centre": [
+   35.08691,
+   -106.61941
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723650",
+   "wban": "23050",
+   "name": "Albuquerque Intl Sunport Airport",
+   "state": "NM",
+   "lat": 35.042,
+   "lon": -106.615,
+   "elev_m": 1618.4
+  },
+  "station_dist_km": 10.0
+ },
+ {
+  "city": "pensacola",
+  "label": "Pensacola, FL--AL",
+  "urban_sq_mi": 262.561,
+  "centre": [
+   30.48038,
+   -87.22517
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722223",
+   "wban": "13899",
+   "name": "Pensacola Regional Airport",
+   "state": "FL",
+   "lat": 30.476,
+   "lon": -87.186,
+   "elev_m": 36.0
+  },
+  "station_dist_km": 7.6
+ },
+ {
+  "city": "greenville",
+  "label": "Greenville, SC",
+  "urban_sq_mi": 262.153,
+  "centre": [
+   34.88488,
+   -82.30502
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723120",
+   "wban": "03870",
+   "name": "Greenville-Spartanburg Intl Airport",
+   "state": "SC",
+   "lat": 34.906,
+   "lon": -82.213,
+   "elev_m": 294.4
+  },
+  "station_dist_km": 17.4
+ },
+ {
+  "city": "allentown",
+  "label": "Allentown--Bethlehem, PA--NJ",
+  "urban_sq_mi": 261.554,
+  "centre": [
+   40.64458,
+   -75.43125
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725170",
+   "wban": "14737",
+   "name": "Lehigh Valley International Airport",
+   "state": "PA",
+   "lat": 40.65,
+   "lon": -75.448,
+   "elev_m": 117.4
+  },
+  "station_dist_km": 3.1
+ },
+ {
+  "city": "elpaso",
+  "label": "El Paso, TX--NM",
+  "urban_sq_mi": 256.057,
+  "centre": [
+   31.79907,
+   -106.38339
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722700",
+   "wban": "23044",
+   "name": "El Paso International Airport",
+   "state": "TX",
+   "lat": 31.812,
+   "lon": -106.377,
+   "elev_m": 1202.1
+  },
+  "station_dist_km": 3.1
+ },
+ {
+  "city": "palmbay",
+  "label": "Palm Bay--Melbourne, FL",
+  "urban_sq_mi": 250.534,
+  "centre": [
+   28.14394,
+   -80.65498
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722040",
+   "wban": "12838",
+   "name": "Melbourne Intl Ap",
+   "state": "FL",
+   "lat": 28.1,
+   "lon": -80.636,
+   "elev_m": 6.7
+  },
+  "station_dist_km": 10.5
+ },
+ {
+  "city": "harrisburg",
+  "label": "Harrisburg, PA",
+  "urban_sq_mi": 250.25,
+  "centre": [
+   40.23222,
+   -76.86601
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725118",
+   "wban": "14751",
+   "name": "Capital City Airport",
+   "state": "PA",
+   "lat": 40.218,
+   "lon": -76.855,
+   "elev_m": 102.2
+  },
+  "station_dist_km": 3.7
+ },
+ {
+  "city": "asheville",
+  "label": "Asheville, NC",
+  "urban_sq_mi": 248.582,
+  "centre": [
+   35.47089,
+   -82.53024
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723150",
+   "wban": "03812",
+   "name": "Asheville Regional Airport",
+   "state": "NC",
+   "lat": 35.432,
+   "lon": -82.538,
+   "elev_m": 645.6
+  },
+  "station_dist_km": 8.8
+ },
+ {
+  "city": "toledo",
+  "label": "Toledo, OH--MI",
+  "urban_sq_mi": 240.72,
+  "centre": [
+   41.61185,
+   -83.70694
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725360",
+   "wban": "94830",
+   "name": "Toledo Express Airport",
+   "state": "OH",
+   "lat": 41.587,
+   "lon": -83.805,
+   "elev_m": 205.5
+  },
+  "station_dist_km": 17.2
+ },
+ {
+  "city": "jackson",
+  "label": "Jackson, MS",
+  "urban_sq_mi": 237.158,
+  "centre": [
+   32.32384,
+   -90.11735
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722350",
+   "wban": "03940",
+   "name": "Jackson International Airport",
+   "state": "MS",
+   "lat": 32.32,
+   "lon": -90.078,
+   "elev_m": 90.2
+  },
+  "station_dist_km": 7.4
+ },
+ {
+  "city": "wichita",
+  "label": "Wichita, KS",
+  "urban_sq_mi": 226.863,
+  "centre": [
+   37.66573,
+   -97.37783
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724500",
+   "wban": "03928",
+   "name": "Wichita Eisenhower National",
+   "state": "KS",
+   "lat": 37.648,
+   "lon": -97.43,
+   "elev_m": 401.7
+  },
+  "station_dist_km": 10.0
+ },
+ {
+  "city": "desmoines",
+  "label": "Des Moines, IA",
+  "urban_sq_mi": 224.508,
+  "centre": [
+   41.5775,
+   -93.65912
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725460",
+   "wban": "14933",
+   "name": "Des Moines International Airport",
+   "state": "IA",
+   "lat": 41.534,
+   "lon": -93.653,
+   "elev_m": 286.3
+  },
+  "station_dist_km": 9.7
+ },
+ {
+  "city": "mobile",
+  "label": "Mobile, AL",
+  "urban_sq_mi": 220.734,
+  "centre": [
+   30.67978,
+   -88.2026
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722230",
+   "wban": "13894",
+   "name": "Mobile Regional Airport",
+   "state": "AL",
+   "lat": 30.688,
+   "lon": -88.246,
+   "elev_m": 65.5
+  },
+  "station_dist_km": 8.5
+ },
+ {
+  "city": "myrtlebeach",
+  "label": "Myrtle Beach--North Myrtle Beach, SC--NC",
+  "urban_sq_mi": 218.963,
+  "centre": [
+   33.72509,
+   -78.89316
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "747910",
+   "wban": "13717",
+   "name": "Myrtle Beach Intl Airport",
+   "state": "SC",
+   "lat": 33.683,
+   "lon": -78.933,
+   "elev_m": 7.6
+  },
+  "station_dist_km": 11.9
+ },
+ {
+  "city": "huntsville",
+  "label": "Huntsville, AL",
+  "urban_sq_mi": 214.775,
+  "centre": [
+   34.69247,
+   -86.72377
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723230",
+   "wban": "03856",
+   "name": "Huntsville Intl/C.T.Jones Field Airport",
+   "state": "AL",
+   "lat": 34.644,
+   "lon": -86.786,
+   "elev_m": 190.0
+  },
+  "station_dist_km": 15.7
+ },
+ {
+  "city": "ogden",
+  "label": "Ogden--Layton, UT",
+  "urban_sq_mi": 212.588,
+  "centre": [
+   41.15854,
+   -111.99595
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725750",
+   "wban": "24126",
+   "name": "Ogden-Hinckley Airport",
+   "state": "UT",
+   "lat": 41.194,
+   "lon": -112.017,
+   "elev_m": 1356.1
+  },
+  "station_dist_km": 8.6
+ },
+ {
+  "city": "poughkeepsie",
+  "label": "Poughkeepsie--Newburgh, NY",
+  "urban_sq_mi": 209.938,
+  "centre": [
+   41.54835,
+   -74.01353
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725038",
+   "wban": "14714",
+   "name": "Stewart International Airport",
+   "state": "NY",
+   "lat": 41.5,
+   "lon": -74.1,
+   "elev_m": 149.7
+  },
+  "station_dist_km": 18.0
+ },
+ {
+  "city": "savannah",
+  "label": "Savannah, GA",
+  "urban_sq_mi": 205.858,
+  "centre": [
+   32.0909,
+   -81.18512
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722070",
+   "wban": "03822",
+   "name": "Savannah/Hilton Head Intl Airport",
+   "state": "GA",
+   "lat": 32.131,
+   "lon": -81.202,
+   "elev_m": 8.7
+  },
+  "station_dist_km": 9.5
+ },
+ {
+  "city": "flint",
+  "label": "Flint, MI",
+  "urban_sq_mi": 205.428,
+  "centre": [
+   42.98959,
+   -83.71527
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726370",
+   "wban": "14826",
+   "name": "Bishop International Airport",
+   "state": "MI",
+   "lat": 42.967,
+   "lon": -83.75,
+   "elev_m": 234.9
+  },
+  "station_dist_km": 7.6
+ },
+ {
+  "city": "springfield",
+  "label": "Springfield, MA--CT",
+  "urban_sq_mi": 201.77,
+  "centre": [
+   42.1457,
+   -72.64746
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "744915",
+   "wban": "14775",
+   "name": "Barnes Municipal Airport",
+   "state": "MA",
+   "lat": 42.16,
+   "lon": -72.712,
+   "elev_m": 80.6
+  },
+  "station_dist_km": 11.1
+ },
+ {
+  "city": "coloradosprings",
+  "label": "Colorado Springs, CO",
+  "urban_sq_mi": 200.37,
+  "centre": [
+   38.84098,
+   -104.72982
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724660",
+   "wban": "93037",
+   "name": "City Of Colorado Springs Municipal Ap",
+   "state": "CO",
+   "lat": 38.809,
+   "lon": -104.689,
+   "elev_m": 1884.2
+  },
+  "station_dist_km": 10.0
+ },
+ {
+  "city": "fayetteville",
+  "label": "Fayetteville, NC",
+  "urban_sq_mi": 195.936,
+  "centre": [
+   35.09281,
+   -78.95492
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "746930",
+   "wban": "93737",
+   "name": "Simmons Aaf Airport",
+   "state": "NC",
+   "lat": 35.133,
+   "lon": -78.933,
+   "elev_m": 74.4
+  },
+  "station_dist_km": 9.8
+ },
+ {
+  "city": "youngstown",
+  "label": "Youngstown, OH",
+  "urban_sq_mi": 195.929,
+  "centre": [
+   41.1957,
+   -80.6899
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725250",
+   "wban": "14852",
+   "name": "Youngstown-Warren Regional Airport",
+   "state": "OH",
+   "lat": 41.255,
+   "lon": -80.674,
+   "elev_m": 355.6
+  },
+  "station_dist_km": 13.5
+ },
+ {
+  "city": "nashua",
+  "label": "Nashua, NH--MA",
+  "urban_sq_mi": 195.588,
+  "centre": [
+   42.87904,
+   -71.46827
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "743945",
+   "wban": "14710",
+   "name": "Manchester Airport",
+   "state": "NH",
+   "lat": 42.93,
+   "lon": -71.436,
+   "elev_m": 69.8
+  },
+  "station_dist_km": 12.5
+ },
+ {
+  "city": "shreveport",
+  "label": "Shreveport, LA",
+  "urban_sq_mi": 180.898,
+  "centre": [
+   32.46546,
+   -93.7929
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722480",
+   "wban": "13957",
+   "name": "Shreveport Regional Airport",
+   "state": "LA",
+   "lat": 32.447,
+   "lon": -93.824,
+   "elev_m": 69.6
+  },
+  "station_dist_km": 7.1
+ },
+ {
+  "city": "syracuse",
+  "label": "Syracuse, NY",
+  "urban_sq_mi": 180.534,
+  "centre": [
+   43.10285,
+   -76.12921
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725190",
+   "wban": "14771",
+   "name": "Syracuse Hancock International Ap",
+   "state": "NY",
+   "lat": 43.111,
+   "lon": -76.104,
+   "elev_m": 124.9
+  },
+  "station_dist_km": 4.5
+ },
+ {
+  "city": "spokane",
+  "label": "Spokane, WA",
+  "urban_sq_mi": 171.673,
+  "centre": [
+   47.65016,
+   -117.43999
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "727850",
+   "wban": "24157",
+   "name": "Spokane International Airport",
+   "state": "WA",
+   "lat": 47.622,
+   "lon": -117.528,
+   "elev_m": 717.7
+  },
+  "station_dist_km": 14.6
+ },
+ {
+  "city": "greensboro",
+  "label": "Greensboro, NC",
+  "urban_sq_mi": 169.32,
+  "centre": [
+   36.08861,
+   -79.88847
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723170",
+   "wban": "13723",
+   "name": "Piedmont Triad International Airport",
+   "state": "NC",
+   "lat": 36.097,
+   "lon": -79.943,
+   "elev_m": 275.0
+  },
+  "station_dist_km": 10.0
+ },
+ {
+  "city": "gulfport",
+  "label": "Gulfport--Biloxi, MS",
+  "urban_sq_mi": 168.632,
+  "centre": [
+   30.41104,
+   -88.9796
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "747686",
+   "wban": "13820",
+   "name": "Keesler Air Force Base",
+   "state": "MS",
+   "lat": 30.417,
+   "lon": -88.917,
+   "elev_m": 10.1
+  },
+  "station_dist_km": 12.1
+ },
+ {
+  "city": "reno",
+  "label": "Reno, NV--CA",
+  "urban_sq_mi": 165.438,
+  "centre": [
+   39.51859,
+   -119.78186
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724880",
+   "wban": "23185",
+   "name": "Reno/Tahoe International Airport",
+   "state": "NV",
+   "lat": 39.508,
+   "lon": -119.768,
+   "elev_m": 1342.5
+  },
+  "station_dist_km": 3.3
+ },
+ {
+  "city": "missionviejo",
+  "label": "Mission Viejo--Lake Forest--Laguna Niguel, CA",
+  "urban_sq_mi": 163.63,
+  "centre": [
+   33.62308,
+   -117.76608
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722977",
+   "wban": "93184",
+   "name": "J. Wayne Apt-Orange Co Apt",
+   "state": "CA",
+   "lat": 33.68,
+   "lon": -117.867,
+   "elev_m": 13.0
+  },
+  "station_dist_km": 22.6
+ },
+ {
+  "city": "fortwayne",
+  "label": "Fort Wayne, IN",
+  "urban_sq_mi": 163.484,
+  "centre": [
+   41.03481,
+   -85.17672
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725330",
+   "wban": "14827",
+   "name": "Fort Wayne International Airport",
+   "state": "IN",
+   "lat": 40.972,
+   "lon": -85.206,
+   "elev_m": 243.0
+  },
+  "station_dist_km": 14.8
+ },
+ {
+  "city": "atlanticcity",
+  "label": "Atlantic City--Ocean City--Villas, NJ",
+  "urban_sq_mi": 162.879,
+  "centre": [
+   39.34569,
+   -74.61547
+  ],
+  "box_km": 32,
+  "station": {
+   "usaf": "724070",
+   "wban": "93730",
+   "name": "Atlantic City International Airport",
+   "state": "NJ",
+   "lat": 39.452,
+   "lon": -74.567,
+   "elev_m": 17.8
+  },
+  "station_dist_km": 25.1
+ },
+ {
+  "city": "scranton",
+  "label": "Scranton, PA",
+  "urban_sq_mi": 162.198,
+  "centre": [
+   41.31947,
+   -75.76326
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725130",
+   "wban": "14777",
+   "name": "Wilkes-Barre/Scranton Intl Airport",
+   "state": "PA",
+   "lat": 41.333,
+   "lon": -75.723,
+   "elev_m": 289.9
+  },
+  "station_dist_km": 7.4
+ },
+ {
+  "city": "lafayette",
+  "label": "Lafayette, LA",
+  "urban_sq_mi": 161.153,
+  "centre": [
+   30.19472,
+   -92.01153
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722405",
+   "wban": "13976",
+   "name": "Lafayette Regional Airport",
+   "state": "LA",
+   "lat": 30.199,
+   "lon": -91.99,
+   "elev_m": 10.8
+  },
+  "station_dist_km": 4.2
+ },
+ {
+  "city": "fresno",
+  "label": "Fresno, CA",
+  "urban_sq_mi": 159.158,
+  "centre": [
+   36.78452,
+   -119.7445
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723890",
+   "wban": "93193",
+   "name": "Fresno Yosemite International Airport",
+   "state": "CA",
+   "lat": 36.78,
+   "lon": -119.72,
+   "elev_m": 101.9
+  },
+  "station_dist_km": 4.5
+ },
+ {
+  "city": "lansing",
+  "label": "Lansing, MI",
+  "urban_sq_mi": 155.824,
+  "centre": [
+   42.7486,
+   -84.57013
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725390",
+   "wban": "14836",
+   "name": "Capital City Airport",
+   "state": "MI",
+   "lat": 42.776,
+   "lon": -84.6,
+   "elev_m": 261.2
+  },
+  "station_dist_km": 7.8
+ },
+ {
+  "city": "indio",
+  "label": "Indio--Palm Desert--Palm Springs, CA",
+  "urban_sq_mi": 151.814,
+  "centre": [
+   33.69023,
+   -116.2553
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "747187",
+   "wban": "03104",
+   "name": "Desert Resorts Rgnl Arpt",
+   "state": "CA",
+   "lat": 33.632,
+   "lon": -116.164,
+   "elev_m": -36.0
+  },
+  "station_dist_km": 21.3
+ },
+ {
+  "city": "madison",
+  "label": "Madison, WI",
+  "urban_sq_mi": 149.705,
+  "centre": [
+   43.09148,
+   -89.4186
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726410",
+   "wban": "14837",
+   "name": "Dane Co Regional-Truax Field Airport",
+   "state": "WI",
+   "lat": 43.141,
+   "lon": -89.345,
+   "elev_m": 261.7
+  },
+  "station_dist_km": 16.3
+ },
+ {
+  "city": "southbend",
+  "label": "South Bend, IN--MI",
+  "urban_sq_mi": 147.934,
+  "centre": [
+   41.70752,
+   -86.26528
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725350",
+   "wban": "14848",
+   "name": "South Bend Regional Airport",
+   "state": "IN",
+   "lat": 41.707,
+   "lon": -86.316,
+   "elev_m": 235.4
+  },
+  "station_dist_km": 8.4
+ },
+ {
+  "city": "bremerton",
+  "label": "Bremerton, WA",
+  "urban_sq_mi": 146.91,
+  "centre": [
+   47.58096,
+   -122.47059
+  ],
+  "box_km": 31,
+  "station": {
+   "usaf": "727935",
+   "wban": "24234",
+   "name": "Boeing Fld/King Co Intl Ap",
+   "state": "WA",
+   "lat": 47.546,
+   "lon": -122.315,
+   "elev_m": 7.6
+  },
+  "station_dist_km": 24.6
+ },
+ {
+  "city": "peoria",
+  "label": "Peoria, IL",
+  "urban_sq_mi": 145.759,
+  "centre": [
+   40.68137,
+   -89.63432
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725320",
+   "wban": "14842",
+   "name": "Greater Peoria Regional Airport",
+   "state": "IL",
+   "lat": 40.667,
+   "lon": -89.684,
+   "elev_m": 199.7
+  },
+  "station_dist_km": 9.0
+ },
+ {
+  "city": "montgomery",
+  "label": "Montgomery, AL",
+  "urban_sq_mi": 145.142,
+  "centre": [
+   32.34598,
+   -86.34638
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722260",
+   "wban": "13895",
+   "name": "Montgomery Rgnl (Dannelly Fd) Ap",
+   "state": "AL",
+   "lat": 32.3,
+   "lon": -86.407,
+   "elev_m": 66.2
+  },
+  "station_dist_km": 15.3
+ },
+ {
+  "city": "honolulu",
+  "label": "Honolulu, HI",
+  "urban_sq_mi": 145.045,
+  "centre": [
+   21.34138,
+   -157.93695
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "911820",
+   "wban": "22521",
+   "name": "Honolulu International Airport",
+   "state": "HI",
+   "lat": 21.324,
+   "lon": -157.939,
+   "elev_m": 1.9
+  },
+  "station_dist_km": 3.9
+ },
+ {
+  "city": "annarbor",
+  "label": "Ann Arbor, MI",
+  "urban_sq_mi": 143.474,
+  "centre": [
+   42.23716,
+   -83.5877
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725376",
+   "wban": "14853",
+   "name": "Willow Run Airport",
+   "state": "MI",
+   "lat": 42.237,
+   "lon": -83.526,
+   "elev_m": 215.7
+  },
+  "station_dist_km": 10.2
+ },
+ {
+  "city": "columbus-19099",
+  "label": "Columbus, GA--AL",
+  "urban_sq_mi": 142.849,
+  "centre": [
+   32.50286,
+   -84.95802
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722255",
+   "wban": "93842",
+   "name": "Columbus Metro Airport",
+   "state": "GA",
+   "lat": 32.516,
+   "lon": -84.942,
+   "elev_m": 120.0
+  },
+  "station_dist_km": 4.2
+ },
+ {
+  "city": "boisecity",
+  "label": "Boise City, ID",
+  "urban_sq_mi": 139.245,
+  "centre": [
+   43.59231,
+   -116.27125
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726810",
+   "wban": "24131",
+   "name": "Boise Air Terminal/Gowen Fd Airport",
+   "state": "ID",
+   "lat": 43.567,
+   "lon": -116.241,
+   "elev_m": 860.5
+  },
+  "station_dist_km": 7.4
+ },
+ {
+  "city": "davenport",
+  "label": "Davenport, IA--IL",
+  "urban_sq_mi": 134.88,
+  "centre": [
+   41.4856,
+   -90.51924
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725440",
+   "wban": "14923",
+   "name": "Quad City International Airport",
+   "state": "IL",
+   "lat": 41.448,
+   "lon": -90.524,
+   "elev_m": 175.5
+  },
+  "station_dist_km": 8.4
+ },
+ {
+  "city": "springfield-83953",
+  "label": "Springfield, MO",
+  "urban_sq_mi": 134.34,
+  "centre": [
+   37.19933,
+   -93.33501
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724400",
+   "wban": "13995",
+   "name": "Springfield-Branson Regional Airport",
+   "state": "MO",
+   "lat": 37.24,
+   "lon": -93.39,
+   "elev_m": 384.7
+  },
+  "station_dist_km": 13.3
+ },
+ {
+  "city": "rockford",
+  "label": "Rockford, IL",
+  "urban_sq_mi": 133.814,
+  "centre": [
+   42.24235,
+   -89.05516
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725430",
+   "wban": "94822",
+   "name": "Greater Rockford Airport",
+   "state": "IL",
+   "lat": 42.193,
+   "lon": -89.093,
+   "elev_m": 221.0
+  },
+  "station_dist_km": 12.6
+ },
+ {
+  "city": "trenton",
+  "label": "Trenton, NJ",
+  "urban_sq_mi": 133.158,
+  "centre": [
+   40.26129,
+   -74.74621
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724095",
+   "wban": "14792",
+   "name": "Trenton Mercer Airport",
+   "state": "NJ",
+   "lat": 40.277,
+   "lon": -74.816,
+   "elev_m": 57.9
+  },
+  "station_dist_km": 12.3
+ },
+ {
+  "city": "bakersfield",
+  "label": "Bakersfield, CA",
+  "urban_sq_mi": 132.121,
+  "centre": [
+   35.39955,
+   -119.05212
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723840",
+   "wban": "23155",
+   "name": "Meadows Field Airport",
+   "state": "CA",
+   "lat": 35.434,
+   "lon": -119.055,
+   "elev_m": 149.3
+  },
+  "station_dist_km": 7.7
+ },
+ {
+  "city": "victorville",
+  "label": "Victorville--Hesperia--Apple Valley, CA",
+  "urban_sq_mi": 131.774,
+  "centre": [
+   34.53024,
+   -117.34242
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723825",
+   "wban": "23131",
+   "name": "Southern California Logistics Airport",
+   "state": "CA",
+   "lat": 34.583,
+   "lon": -117.383,
+   "elev_m": 879.4
+  },
+  "station_dist_km": 13.9
+ },
+ {
+  "city": "corpuschristi",
+  "label": "Corpus Christi, TX",
+  "urban_sq_mi": 129.23,
+  "centre": [
+   27.76118,
+   -97.46511
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722510",
+   "wban": "12924",
+   "name": "Corpus Christi International Airport",
+   "state": "TX",
+   "lat": 27.773,
+   "lon": -97.513,
+   "elev_m": 12.5
+  },
+  "station_dist_km": 9.8
+ },
+ {
+  "city": "huntington",
+  "label": "Huntington, WV--KY--OH",
+  "urban_sq_mi": 128.994,
+  "centre": [
+   38.40702,
+   -82.45918
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724250",
+   "wban": "03860",
+   "name": "Tri-State/M.J.Fergus",
+   "state": "WV",
+   "lat": 38.365,
+   "lon": -82.555,
+   "elev_m": 251.3
+  },
+  "station_dist_km": 19.1
+ },
+ {
+  "city": "lakecharles",
+  "label": "Lake Charles, LA",
+  "urban_sq_mi": 127.739,
+  "centre": [
+   30.2116,
+   -93.19727
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722404",
+   "wban": "13941",
+   "name": "Chennault International Ap",
+   "state": "LA",
+   "lat": 30.21,
+   "lon": -93.143,
+   "elev_m": 5.2
+  },
+  "station_dist_km": 10.4
+ },
+ {
+  "city": "phoenixwest",
+  "label": "Phoenix West--Goodyear--Avondale, AZ",
+  "urban_sq_mi": 127.618,
+  "centre": [
+   33.50898,
+   -112.36547
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722785",
+   "wban": "23111",
+   "name": "Luke Afb Airport",
+   "state": "AZ",
+   "lat": 33.55,
+   "lon": -112.367,
+   "elev_m": 330.7
+  },
+  "station_dist_km": 9.1
+ },
+ {
+  "city": "roanoke",
+  "label": "Roanoke, VA",
+  "urban_sq_mi": 125.503,
+  "centre": [
+   37.30616,
+   -79.9687
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724110",
+   "wban": "13741",
+   "name": "Roanoke Regional/Woodrum Field Ap",
+   "state": "VA",
+   "lat": 37.317,
+   "lon": -79.974,
+   "elev_m": 346.8
+  },
+  "station_dist_km": 2.6
+ },
+ {
+  "city": "tallahassee",
+  "label": "Tallahassee, FL",
+  "urban_sq_mi": 125.473,
+  "centre": [
+   30.43518,
+   -84.31162
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722140",
+   "wban": "93805",
+   "name": "Tallahassee Regional Airport",
+   "state": "FL",
+   "lat": 30.394,
+   "lon": -84.351,
+   "elev_m": 17.1
+  },
+  "station_dist_km": 11.9
+ },
+ {
+  "city": "portland-71263",
+  "label": "Portland, ME",
+  "urban_sq_mi": 123.843,
+  "centre": [
+   43.63345,
+   -70.31756
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726060",
+   "wban": "14764",
+   "name": "Portland International Jetport Ap",
+   "state": "ME",
+   "lat": 43.642,
+   "lon": -70.304,
+   "elev_m": 13.5
+  },
+  "station_dist_km": 2.9
+ },
+ {
+  "city": "navarre",
+  "label": "Navarre--Miramar Beach--Destin, FL",
+  "urban_sq_mi": 119.393,
+  "centre": [
+   30.42523,
+   -86.67017
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "747770",
+   "wban": "03852",
+   "name": "Hurlburt Field Airport",
+   "state": "FL",
+   "lat": 30.417,
+   "lon": -86.683,
+   "elev_m": 11.6
+  },
+  "station_dist_km": 3.1
+ },
+ {
+  "city": "norwich",
+  "label": "Norwich--New London, CT",
+  "urban_sq_mi": 116.723,
+  "centre": [
+   41.36969,
+   -72.07354
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725046",
+   "wban": "14707",
+   "name": "Groton-New London Airport",
+   "state": "CT",
+   "lat": 41.328,
+   "lon": -72.049,
+   "elev_m": 2.5
+  },
+  "station_dist_km": 10.1
+ },
+ {
+  "city": "greenbay",
+  "label": "Green Bay, WI",
+  "urban_sq_mi": 113.658,
+  "centre": [
+   44.49123,
+   -88.08844
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726450",
+   "wban": "14898",
+   "name": "Austin Straubel International Ap",
+   "state": "WI",
+   "lat": 44.48,
+   "lon": -88.137,
+   "elev_m": 208.6
+  },
+  "station_dist_km": 8.1
+ },
+ {
+  "city": "clarksville",
+  "label": "Clarksville, TN--KY",
+  "urban_sq_mi": 113.09,
+  "centre": [
+   36.62184,
+   -87.41425
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "746710",
+   "wban": "13806",
+   "name": "Campbell Aaf Airport",
+   "state": "KY",
+   "lat": 36.667,
+   "lon": -87.483,
+   "elev_m": 174.7
+  },
+  "station_dist_km": 15.9
+ },
+ {
+  "city": "evansville",
+  "label": "Evansville, IN",
+  "urban_sq_mi": 112.753,
+  "centre": [
+   38.0286,
+   -87.52059
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724320",
+   "wban": "93817",
+   "name": "Evansville Regional Airport",
+   "state": "IN",
+   "lat": 38.05,
+   "lon": -87.515,
+   "elev_m": 122.5
+  },
+  "station_dist_km": 4.9
+ },
+ {
+  "city": "kennewick",
+  "label": "Kennewick--Richland--Pasco, WA",
+  "urban_sq_mi": 112.215,
+  "centre": [
+   46.25112,
+   -119.15733
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "727845",
+   "wban": "24163",
+   "name": "Tri-Cities Airport",
+   "state": "WA",
+   "lat": 46.27,
+   "lon": -119.118,
+   "elev_m": 122.1
+  },
+  "station_dist_km": 7.4
+ },
+ {
+  "city": "muskegon",
+  "label": "Muskegon--Norton Shores, MI",
+  "urban_sq_mi": 112.063,
+  "centre": [
+   43.16471,
+   -86.22261
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "726360",
+   "wban": "14840",
+   "name": "Muskegon County Airport",
+   "state": "MI",
+   "lat": 43.171,
+   "lon": -86.237,
+   "elev_m": 190.3
+  },
+  "station_dist_km": 2.7
+ },
+ {
+  "city": "galveston",
+  "label": "Galveston--Texas City, TX",
+  "urban_sq_mi": 109.003,
+  "centre": [
+   29.31732,
+   -94.93079
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722420",
+   "wban": "12923",
+   "name": "Scholes Intl At Glston Apt",
+   "state": "TX",
+   "lat": 29.27,
+   "lon": -94.864,
+   "elev_m": 1.5
+  },
+  "station_dist_km": 16.7
+ },
+ {
+  "city": "deltona",
+  "label": "Deltona, FL",
+  "urban_sq_mi": 108.983,
+  "centre": [
+   28.8849,
+   -81.25183
+  ],
+  "box_km": 31,
+  "station": {
+   "usaf": "722057",
+   "wban": "12854",
+   "name": "Orlando Sanford Airport",
+   "state": "FL",
+   "lat": 28.78,
+   "lon": -81.244,
+   "elev_m": 14.9
+  },
+  "station_dist_km": 23.4
+ },
+ {
+  "city": "lubbock",
+  "label": "Lubbock, TX",
+  "urban_sq_mi": 106.278,
+  "centre": [
+   33.61174,
+   -101.85917
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722670",
+   "wban": "23042",
+   "name": "Lubbock International Airport",
+   "state": "TX",
+   "lat": 33.666,
+   "lon": -101.823,
+   "elev_m": 993.2
+  },
+  "station_dist_km": 13.8
+ },
+ {
+  "city": "olympia",
+  "label": "Olympia--Lacey, WA",
+  "urban_sq_mi": 106.205,
+  "centre": [
+   47.00123,
+   -122.88019
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "727920",
+   "wban": "24227",
+   "name": "Olympia Airport",
+   "state": "WA",
+   "lat": 46.974,
+   "lon": -122.905,
+   "elev_m": 60.9
+  },
+  "station_dist_km": 7.1
+ },
+ {
+  "city": "mauldin",
+  "label": "Mauldin--Simpsonville, SC",
+  "urban_sq_mi": 101.207,
+  "centre": [
+   34.80783,
+   -82.30297
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723119",
+   "wban": "13886",
+   "name": "Greenville Downtown Arpt",
+   "state": "SC",
+   "lat": 34.849,
+   "lon": -82.35,
+   "elev_m": 309.9
+  },
+  "station_dist_km": 12.6
+ },
+ {
+  "city": "killeen",
+  "label": "Killeen, TX",
+  "urban_sq_mi": 100.415,
+  "centre": [
+   31.11409,
+   -97.73792
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722570",
+   "wban": "03933",
+   "name": "Hood Aaf Airport",
+   "state": "TX",
+   "lat": 31.133,
+   "lon": -97.717,
+   "elev_m": 281.6
+  },
+  "station_dist_km": 5.8
+ },
+ {
+  "city": "macon-bibbcounty",
+  "label": "Macon-Bibb County, GA",
+  "urban_sq_mi": 99.269,
+  "centre": [
+   32.76685,
+   -83.66478
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722170",
+   "wban": "03813",
+   "name": "Middle Georgia Regional Airport",
+   "state": "GA",
+   "lat": 32.689,
+   "lon": -83.653,
+   "elev_m": 104.5
+  },
+  "station_dist_km": 17.5
+ },
+ {
+  "city": "beaumont",
+  "label": "Beaumont, TX",
+  "urban_sq_mi": 96.12,
+  "centre": [
+   30.03138,
+   -94.07766
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722410",
+   "wban": "12917",
+   "name": "Southeast Texas Regional Airport",
+   "state": "TX",
+   "lat": 29.952,
+   "lon": -94.026,
+   "elev_m": 3.8
+  },
+  "station_dist_km": 20.3
+ },
+ {
+  "city": "reading",
+  "label": "Reading, PA",
+  "urban_sq_mi": 96.12,
+  "centre": [
+   40.36872,
+   -75.95519
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725103",
+   "wban": "14712",
+   "name": "Rdng Rgnl/C A Spaatz Fd Ap",
+   "state": "PA",
+   "lat": 40.373,
+   "lon": -75.959,
+   "elev_m": 101.3
+  },
+  "station_dist_km": 1.2
+ },
+ {
+  "city": "lincoln",
+  "label": "Lincoln, NE",
+  "urban_sq_mi": 94.166,
+  "centre": [
+   40.82848,
+   -96.72197
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "725510",
+   "wban": "14939",
+   "name": "Lincoln Municipal Airport",
+   "state": "NE",
+   "lat": 40.848,
+   "lon": -96.765,
+   "elev_m": 356.7
+  },
+  "station_dist_km": 8.4
+ },
+ {
+  "city": "charleston-15481",
+  "label": "Charleston, WV",
+  "urban_sq_mi": 92.982,
+  "centre": [
+   38.36752,
+   -81.62837
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724140",
+   "wban": "13866",
+   "name": "Yeager Airport",
+   "state": "WV",
+   "lat": 38.38,
+   "lon": -81.591,
+   "elev_m": 278.1
+  },
+  "station_dist_km": 7.1
+ },
+ {
+  "city": "stockton",
+  "label": "Stockton, CA",
+  "urban_sq_mi": 92.462,
+  "centre": [
+   37.92163,
+   -121.25735
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724920",
+   "wban": "23237",
+   "name": "Stockton Metropolitan Airport",
+   "state": "CA",
+   "lat": 37.89,
+   "lon": -121.226,
+   "elev_m": 8.3
+  },
+  "station_dist_km": 8.9
+ },
+ {
+  "city": "athens-clarkecounty",
+  "label": "Athens-Clarke County, GA",
+  "urban_sq_mi": 91.86,
+  "centre": [
+   33.9463,
+   -83.36155
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "723110",
+   "wban": "13873",
+   "name": "Athens/Ben Epps Airport",
+   "state": "GA",
+   "lat": 33.948,
+   "lon": -83.327,
+   "elev_m": 239.0
+  },
+  "station_dist_km": 6.4
+ },
+ {
+  "city": "anchorage",
+  "label": "Anchorage, AK",
+  "urban_sq_mi": 91.765,
+  "centre": [
+   61.16929,
+   -149.94108
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "702730",
+   "wban": "26451",
+   "name": "Ted Stevens Anchorage Intl",
+   "state": "AK",
+   "lat": 61.169,
+   "lon": -150.028,
+   "elev_m": 38.0
+  },
+  "station_dist_km": 9.3
+ },
+ {
+  "city": "lynchburg",
+  "label": "Lynchburg, VA",
+  "urban_sq_mi": 91.595,
+  "centre": [
+   37.3555,
+   -79.20367
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "724100",
+   "wban": "13733",
+   "name": "Lynchburg Rgnl/Preston Glenn Fld Ap",
+   "state": "VA",
+   "lat": 37.321,
+   "lon": -79.206,
+   "elev_m": 274.9
+  },
+  "station_dist_km": 7.7
+ },
+ {
+  "city": "monroe",
+  "label": "Monroe, LA",
+  "urban_sq_mi": 90.971,
+  "centre": [
+   32.51876,
+   -92.0733
+  ],
+  "box_km": 30,
+  "station": {
+   "usaf": "722486",
+   "wban": "13942",
+   "name": "Monroe Regional Airport",
+   "state": "LA",
+   "lat": 32.516,
+   "lon": -92.03,
+   "elev_m": 22.1
+  },
+  "station_dist_km": 8.1
  }
 ]

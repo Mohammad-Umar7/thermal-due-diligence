@@ -70,11 +70,32 @@ def credits():
 
 
 def poll(activity_id, timeout_s=600, interval=5, read_timeout=900):
-    """Poll to completion. A 404 shortly after submit means 'not ready', not fatal."""
+    """
+    Poll to completion.
+
+    Two failure modes are specific to this API and must not be mistaken for
+    "still processing":
+
+      404  right after submission means the activity is not registered yet, not
+           that it is gone. Tolerated for a grace window.
+      504  (or 502/503) means the activity finished - and was charged - but the
+           gateway cannot serialise a result this large inside its own 30 s
+           limit. Retrying never helps; a ~90,000-tile survey retrieves fine,
+           a ~160,000-tile one 504s forever.
+    """
     started = time.time()
     consecutive_404 = 0
+    consecutive_gateway = 0
     while time.time() - started < timeout_s:
         code, data = request("GET", "/status/%s" % activity_id, timeout=read_timeout)
+        if code in (502, 503, 504):
+            consecutive_gateway += 1
+            if consecutive_gateway >= 3:
+                return {"status": "TooLarge",
+                        "_note": "gateway %d retrieving result; survey is charged but unreadable" % code}
+            time.sleep(interval)
+            continue
+        consecutive_gateway = 0
         if code == 404:
             consecutive_404 += 1
             if consecutive_404 > 12:

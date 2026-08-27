@@ -24,7 +24,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 
 MIN_BOX_KM = 30
-MAX_BOX_KM = 40          # 40 km at 100 m is 160,000 tiles, ~8 MB of tile data.
+MAX_BOX_KM = 34          # ~116,000 tiles. The retrieval ceiling sits between
+                         # 125,454 tiles (40 km New York, retrieved fine) and
+                         # ~160,000 (40 km Atlanta/Chicago, 504 forever). Their
+                         # gateway gives up at 30 s and the result, though charged,
+                         # is then unreadable. 34 km keeps a margin under that.
+                         # server-side, are charged, and then 504 forever: their
+                         # gateway gives up at 30 s and cannot serialise 160,000
+                         # tiles in that time. Verified at 40 km and 52 km.
                          # 52 km was 270,000 tiles and the status response could not
                          # be downloaded inside a sane timeout.
 STATION_MARGIN_KM = 4    # keep the station clear of the box edge

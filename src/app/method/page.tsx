@@ -239,31 +239,33 @@ parcel design = published standard + combined`}
           n="6"
           id="coverage"
           title="Coverage"
-          lede={`${cities.filter((c) => c.raster).length} metros surveyed so far. Adding another is one FortyGuard request.`}
+          lede={`${cities.length} metros surveyed, ${cities.reduce((n, c) => n + c.fortyguard.nTiles, 0).toLocaleString("en-US")} tiles at 100 m. Adding another is one FortyGuard request.`}
         >
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[560px] border-collapse text-[13.5px]">
-              <thead>
+          {/* 150 rows is a reference list, not something to scroll the page past:
+              it gets its own scroll container with a sticky header. */}
+          <div className="max-h-[520px] overflow-auto rounded-[3px] border border-rule">
+            <table className="w-full min-w-[600px] border-collapse text-[13.5px]">
+              <thead className="sticky top-0 z-10 bg-surface">
                 <tr className="border-b border-rule-strong text-left">
-                  <th className="label py-2 font-semibold">Metro</th>
-                  <th className="label py-2 font-semibold">Reference station</th>
-                  <th className="label py-2 text-right font-semibold">Survey</th>
-                  <th className="label py-2 text-right font-semibold">Tiles</th>
-                  <th className="label py-2 text-right font-semibold">Record</th>
+                  <th className="label bg-surface px-3 py-2 font-semibold">Metro</th>
+                  <th className="label bg-surface px-3 py-2 font-semibold">Reference station</th>
+                  <th className="label bg-surface px-3 py-2 text-right font-semibold">Survey</th>
+                  <th className="label bg-surface px-3 py-2 text-right font-semibold">Tiles</th>
+                  <th className="label bg-surface px-3 py-2 text-right font-semibold">Record</th>
                 </tr>
               </thead>
               <tbody>
                 {cities.map((c) => (
-                  <tr key={c.city} className="border-b border-rule">
-                    <td className="py-2.5 font-medium">{c.label}</td>
-                    <td className="py-2.5 text-ink-muted">
+                  <tr key={c.city} className="border-b border-rule last:border-b-0">
+                    <td className="px-3 py-2 font-medium">{c.label}</td>
+                    <td className="px-3 py-2 text-ink-muted">
                       {c.station.name.replace(/, [A-Z]{2}$/, "")}
                     </td>
-                    <td className="figure py-2.5 text-right">{c.fortyguard.boxKm} km</td>
-                    <td className="figure py-2.5 text-right">
+                    <td className="figure px-3 py-2 text-right">{c.fortyguard.boxKm} km</td>
+                    <td className="figure px-3 py-2 text-right">
                       {c.fortyguard.nTiles.toLocaleString("en-US")}
                     </td>
-                    <td className="figure py-2.5 text-right text-ink-muted">
+                    <td className="figure px-3 py-2 text-right text-ink-muted">
                       {c.noaa.historicWindow}
                     </td>
                   </tr>
