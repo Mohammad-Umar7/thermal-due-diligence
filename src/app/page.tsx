@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Masthead>
-        <Link className="text-survey underline underline-offset-2" href="/method">
+        <Link className="text-survey underline underline-offset-2" href="/method/">
           How this works
         </Link>
       </Masthead>
@@ -72,7 +72,7 @@ export default function Home() {
           </p>
           <div className="mt-5">
             <Link
-              href={`/report/${hero.id}`}
+              href={`/report/${hero.id}/`}
               className="inline-flex items-center gap-2 rounded-[3px] bg-ink px-4 py-2.5 text-[14px] font-medium text-ground transition-opacity hover:opacity-90"
             >
               Read the full survey
@@ -100,7 +100,7 @@ export default function Home() {
               return (
                 <li key={p.id}>
                   <Link
-                    href={`/report/${p.id}`}
+                    href={`/report/${p.id}/`}
                     className="flex h-full flex-col rounded-[4px] border border-rule bg-surface p-4 transition-colors hover:border-rule-strong"
                   >
                     <span className="label">{p.kind}</span>

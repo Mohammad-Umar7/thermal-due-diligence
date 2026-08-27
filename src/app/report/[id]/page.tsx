@@ -26,7 +26,7 @@ export default async function ReportPage({ params }: PageProps<"/report/[id]">) 
   return (
     <>
       <Masthead>
-        <Link className="text-survey underline underline-offset-2" href="/method">
+        <Link className="text-survey underline underline-offset-2" href="/method/">
           How this works
         </Link>
         <Link className="text-survey underline underline-offset-2 no-print" href="/lookup/">
@@ -37,7 +37,7 @@ export default async function ReportPage({ params }: PageProps<"/report/[id]">) 
       <main className="mx-auto w-full max-w-5xl flex-1 px-5 sm:px-8">
         <ReportBody report={report} />
         <div className="no-print border-t border-rule py-8">
-          <Link className="text-[14px] text-survey underline underline-offset-2" href="/method">
+          <Link className="text-[14px] text-survey underline underline-offset-2" href="/method/">
             Full methodology, data sources and limitations →
           </Link>
         </div>

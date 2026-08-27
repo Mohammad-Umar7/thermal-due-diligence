@@ -14,7 +14,26 @@ type State =
   | { phase: "idle" }
   | { phase: "working"; step: string }
   | { phase: "done"; report: Report }
+  | { phase: "city"; city: CityRecord }
   | { phase: "error"; title: string; detail: string; showCovered: boolean };
+
+/**
+ * A bare city name is not a street address, and the Census geocoder will reject
+ * it. Someone typing "Las Vegas" has asked a reasonable question though, so
+ * match it against the surveyed metros before geocoding and offer that metro's
+ * parcels rather than dead-ending on "no matching US address".
+ */
+function matchCity(query: string, cities: CityRecord[]): CityRecord | null {
+  const q = query.toLowerCase().replace(/[^a-z\s]/g, " ").replace(/\s+/g, " ").trim();
+  if (!q || /\d/.test(query)) return null; // anything with a number is a street address
+  for (const c of cities) {
+    const cityName = c.label.split(",")[0].toLowerCase();
+    if (q === cityName || q === c.city || q === c.label.toLowerCase()) return c;
+    // "las vegas nv", "phoenix arizona"
+    if (q.startsWith(cityName + " ") || q === cityName.replace(/\s/g, "")) return c;
+  }
+  return null;
+}
 
 export default function LookupPage() {
   return (
@@ -39,6 +58,12 @@ function Lookup() {
     let cancelled = false;
     const run = async () => {
       try {
+        const named = matchCity(query, cities);
+        if (named) {
+          setState({ phase: "city", city: named });
+          return;
+        }
+
         setState({ phase: "working", step: "Finding the address" });
         const match = await geocode(query);
         if (cancelled) return;
@@ -109,7 +134,7 @@ function Lookup() {
   return (
     <>
       <Masthead>
-        <Link className="text-survey underline underline-offset-2" href="/method">
+        <Link className="text-survey underline underline-offset-2" href="/method/">
           How this works
         </Link>
         <Link className="text-survey underline underline-offset-2 no-print" href="/">
@@ -132,6 +157,8 @@ function Lookup() {
           />
         ) : null}
 
+        {state.phase === "city" ? <CityPicked city={state.city} /> : null}
+
         {state.phase === "done" ? <ReportBody report={state.report} /> : null}
 
         {state.phase === "idle" ? (
@@ -147,6 +174,69 @@ function Lookup() {
 
       <Footer />
     </>
+  );
+}
+
+/** Someone typed a city, not an address. Show them what that city looks like. */
+function CityPicked({ city }: { city: CityRecord }) {
+  const temporal = Math.round((city.noaa.design04RecentC - city.noaa.design04HistoricC) * 100) / 100;
+  return (
+    <div className="py-12">
+      <p className="label">{city.label} is surveyed</p>
+      <h1 className="mt-2 font-display text-[26px] font-semibold sm:text-[30px]">
+        Pick a parcel, or enter a street address
+      </h1>
+      <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-muted">
+        The survey covers a {city.fortyguard.boxKm} km square around{" "}
+        {city.station.name.replace(/, [A-Z]{2}$/, "")} at{" "}
+        {city.fortyguard.granularityM} m resolution. Across it, parcels run{" "}
+        <span className="figure">{city.fortyguard.peakOffsetC.min.toFixed(2)}</span> to{" "}
+        <span className="figure">+{city.fortyguard.peakOffsetC.max.toFixed(2)}</span> °C from the
+        station — so the answer genuinely depends on which parcel you mean.
+      </p>
+
+      <dl className="mt-6 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-[3px] border border-rule bg-rule sm:grid-cols-3">
+        <Cell label="Published standard" value={`${city.noaa.design04HistoricC.toFixed(2)} °C`} />
+        <Cell label="Temporal component" value={`${temporal >= 0 ? "+" : "−"}${Math.abs(temporal).toFixed(2)} °C`} />
+        <Cell
+          label="Metro hotter than station"
+          value={`${city.fortyguard.pctMetroHotterThanStation.toFixed(0)}%`}
+        />
+      </dl>
+
+      <p className="label mt-8 mb-3">Surveyed parcels in {city.label}</p>
+      <ul className="grid gap-3 sm:grid-cols-3">
+        {city.parcels.map((p) => (
+          <li key={p.id}>
+            <Link
+              href={`/report/${p.id}/`}
+              className="flex h-full flex-col rounded-[4px] border border-rule bg-surface p-4 transition-colors hover:border-rule-strong"
+            >
+              <span className="label">{p.kind}</span>
+              <span className="mt-1.5 font-display text-[16px] font-semibold leading-snug">
+                {p.label}
+              </span>
+              <span className="mt-1 text-[11.5px] text-ink-faint">{p.address}</span>
+              <span className="figure mt-3 border-t border-rule pt-2.5 text-[18px] font-semibold"
+                style={{ color: p.spatialOffsetC >= 0 ? "var(--heat-2)" : "var(--cool)" }}>
+                {p.spatialOffsetC >= 0 ? "+" : "−"}
+                {Math.abs(p.spatialOffsetC).toFixed(2)}
+                <span className="ml-1 text-[11px] font-normal text-ink-muted">°C vs station</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Cell({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-surface px-3.5 py-3">
+      <dt className="label">{label}</dt>
+      <dd className="figure mt-1 text-[16px] font-semibold">{value}</dd>
+    </div>
   );
 }
 
@@ -188,7 +278,7 @@ function Failure({
               return (
                 <li key={c.city}>
                   <Link
-                    href={`/report/${example?.id ?? ""}`}
+                    href={`/report/${example?.id ?? ""}/`}
                     className="flex h-full flex-col rounded-[4px] border border-rule bg-surface p-4 transition-colors hover:border-rule-strong"
                   >
                     <span className="font-display text-[16px] font-semibold">{c.label}</span>
