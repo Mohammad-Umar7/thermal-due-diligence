@@ -52,3 +52,13 @@ data/2024_Gaz_ua_national.txt
 data/gaz_ua.zip
 data/metro/*.activity
 data/metro/*.part
+
+# Intermediate survey data. Regenerable from the API and NOAA via scripts/;
+# multi-megabyte per metro and never read by the app, which reads public/rasters.
+data/metro/
+data/noaa/
+data/rasters/
+data/probes/
+data/*.csv
+data/*.txt
+data/*.zip
